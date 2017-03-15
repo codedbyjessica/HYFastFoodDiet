@@ -7,9 +7,22 @@ const browserSync = require('browser-sync');
 const reload = browserSync.reload;
 const notify = require('gulp-notify');
 const plumber = require('gulp-plumber');
+const sass = require("gulp-sass");
+const concat = require("gulp-concat");
+const autoprefixer = require('gulp-autoprefixer');
+
+gulp.task("styles", () => {
+    return gulp.src("./dev/styles/**/*.scss")//instide styles folder, ,any folder thats in there and any file that ends in scss, deal with it
+    .pipe(sass().on("error",sass.logError))
+    .pipe(autoprefixer('last 2 versions', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
+    .pipe(concat("style.css"))
+    .pipe(plumber())
+    .pipe(gulp.dest("./public/styles"))
+    .pipe(reload({stream: true}));
+});
 
 gulp.task('js', () => {
-    browserify('src/app.js')
+    browserify('dev/app.js')
         .transform('babelify', {
             presets: ['es2015','react']
         })
@@ -20,6 +33,7 @@ gulp.task('js', () => {
         }))
         .pipe(source('app.js'))
         .pipe(buffer())
+        .pipe(plumber())
         .pipe(gulp.dest('public/'))
         .pipe(reload({stream:true}));
 });
@@ -33,7 +47,7 @@ gulp.task('bs', () => {
 });
 
 
-gulp.task('default', ['js','bs'], () => {
-    gulp.watch('src/**/*.js',['js']);
+gulp.task('default', ['styles','js','bs'], () => {
+    gulp.watch('dev/**/*.js',['js']);
     gulp.watch('./public/style.css',reload);
 });
