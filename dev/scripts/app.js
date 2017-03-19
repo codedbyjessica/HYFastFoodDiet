@@ -281,9 +281,11 @@ class CalculateNutrients extends React.Component {
 			caloriesNeeded:0,
 			proteinNeeded:0,
 			fatNeeded:0,
-			carbsNeeded:0
+			carbsNeeded:0,
+			visible: false
 		}
 		this.handleChange = this.handleChange.bind(this);
+		this.ShowMyNutrients = this.ShowMyNutrients.bind(this);
 	}
 	handleChange(e) {
 		this.setState({
@@ -295,14 +297,17 @@ class CalculateNutrients extends React.Component {
 			<div className="myInfo box">
 				<h1>My info</h1>
 				<form className="myInfoForm" onSubmit={(e) => this.calculateNeeded(e, this.state.sex, this.state.weight, this.state.height, this.state.age)}>
-				<div>
+				<div className="myInfoTop">
 					<input type="radio" name="sex" value="male" id="male" onChange={this.handleChange} /><label htmlFor="male">Male</label>
 					<input type="radio" name="sex" value="female" id="female" onChange={this.handleChange} /><label htmlFor="female">Female</label>
-					<input type="text" name="age" className="numberInput" placeholder="Age" onChange={this.handleChange} />
 				</div>
 				<div>
-					<input type="text" name="weight" className="numberInput" placeholder="Weight(kg)" onChange={this.handleChange} />
-					<input type="text" name="height" className="numberInput" placeholder="Height(cm)" onChange={this.handleChange} />
+					Age:
+					<input type="text" name="age" className="numberInput" value="0" placeholder="Age" onChange={this.handleChange} />
+					Weight(kg)
+					<input type="text" name="weight" className="numberInput" value="0" placeholder="Weight(kg)" onChange={this.handleChange} />
+					Height(cm)
+					<input type="text" name="height" className="numberInput" value="0" placeholder="Height(cm)" onChange={this.handleChange} />
 				</div>
 				<div>
 					Exercise level:
@@ -310,23 +315,33 @@ class CalculateNutrients extends React.Component {
 					<input type="radio" name="activity" value="medium" id="medium" onChange={this.handleChange} /> <label htmlFor="medium">Medium</label>
 					<input type="radio" name="activity" value="high" id="high" onChange={this.handleChange} /> <label htmlFor="high">High</label>
 				</div>
-				<div><button>Submit</button></div>
+				<div><button onClick={this.ShowMyNutrients}>Submit</button></div>
 				</form>
-				<div>
-					<h3>Your recommended daily intake:</h3>
-					<span>{`Calories: ${this.state.caloriesNeeded}kcal`}</span>
-					<span>{`Proteins: ${this.state.proteinNeeded}g`}</span>
-					<span>{`Carbs: ${this.state.carbsNeeded}g`}</span>
-					<span>{`Fats: ${this.state.fatNeeded}g`}</span>
-				</div>
-				<div>
-					<h3>Nutrients to add to your diet</h3>
-					<p>Calories: <span>{`${this.state.caloriesNeeded - this.props.calories}`}</span>kcal | Proteins: <span>{`${this.state.proteinNeeded - this.props.proteins}`}</span>g</p>
-					<p>Carbs: <span>{`${this.state.carbsNeeded - this.props.carbs}`}</span>g | Fats: <span>{`${this.state.fatNeeded - this.props.fats}`}</span>g</p>
-					<p>Sodium: <span>{`${2300 - this.props.sodium}`}</span>mg | Sugars: <span>{`${40 - this.props.sugars}`}</span>g</p>
-				</div>
+
+
+				{
+					this.state.visible
+					? <NutrientsToAdd 
+					caloriesNeeded={this.state.caloriesNeeded}
+					calories={this.props.calories}
+					proteinNeeded={this.state.proteinNeeded}
+					proteins={this.props.proteins}
+					carbsNeeded={this.state.carbsNeeded}
+					carbs={this.props.carbs}
+					fatNeeded={this.state.fatNeeded}
+					fats={this.props.fats}
+					sodium={this.props.sodium}
+					sugars={this.props.sugars}
+					/>
+					: null
+				}
 			</div>
 		)
+	}
+	ShowMyNutrients(){
+		this.setState({
+			visible: true
+		});
 	}
 	calculateNeeded(e){
 		e.preventDefault();
@@ -345,8 +360,8 @@ class CalculateNutrients extends React.Component {
 			var caloriesNeeded = Math.round(bmr)
 		}
 		var proteinNeeded = Math.round(0.9*this.state.weight)
-		var fatNeeded = 0.3*caloriesNeeded
-		var carbsNeeded = 0.6*caloriesNeeded
+		var fatNeeded = Math.round(0.3*caloriesNeeded)
+		var carbsNeeded = Math.round(0.6*caloriesNeeded)
 		this.setState({
 			caloriesNeeded: caloriesNeeded,
 			carbsNeeded:carbsNeeded,
@@ -356,5 +371,23 @@ class CalculateNutrients extends React.Component {
 	}
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+const NutrientsToAdd = function(props){
+	return(
+		<div>
+			<div>
+				<h3>Your recommended daily intake:</h3>
+				<p>{`Calories: ${props.caloriesNeeded} kcal`} | {`Proteins: ${props.proteinNeeded} g`}</p>
+				<p>{`Carbs: ${props.carbsNeeded} g`} |  {`Fats: ${props.fatNeeded} g`}</p>
+			</div>
+			<div className="nutrientsToAdd">
+				<h3>Nutrients to add to your diet</h3>
+				<p>Calories: <span>{`${props.caloriesNeeded - props.calories}`}</span>kcal | Proteins: <span>{`${props.proteinNeeded - props.proteins}`}</span>g</p>
+				<p>Carbs: <span>{`${props.carbsNeeded - props.carbs}`}</span>g | Fats: <span>{`${props.fatNeeded - props.fats}`}</span>g</p>
+				<p>Sodium: <span>{`${2300 - props.sodium}`}</span>mg | Sugars: <span>{`${40 - props.sugars}`}</span>g</p>
+			</div>
+		</div>
+	)
+}
 
+
+ReactDOM.render(<App />, document.getElementById("app"));

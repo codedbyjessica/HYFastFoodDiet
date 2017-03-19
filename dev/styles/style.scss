@@ -104,21 +104,33 @@ header{
 	order: 1;
 	width: 31.3%;
 	background-color: $primaryColorDark;
-	div{
-		padding: 8px 0;
-		&:first-child{
-			padding-top:15px;
-		}
-		&:last-child{
-			padding-bottom: 15px;
-		}
-	}
+	// div{
+	// 	margin: 8px 0;
+	// }
 	h1{
 		background-color: $lightColor;
 	}
 	span{
-		padding: 0 5px;
+		font-weight: bold;
+		color: #269328;
+		padding-right: 3px;
 	}
+}
+
+.myInfoTop{
+	padding-top: 20px;
+}
+
+.nutrientsToAdd{
+	background-color: $lightColor;
+	display: block;
+	margin: 0 auto;
+	width: 70%;
+	padding: 8px 15px;
+	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+
 }
 
 .searchFormDiv{
@@ -206,28 +218,28 @@ header{
 	}
 
 	input[type="radio"]:checked + label {
-		background-color: $highlightColor;
-		color: $lightColor;
+		background-color: $primaryColorLight;
+		color: $darkColor;
 	}
 
 	label{
 		display: inline-block;
 		padding:5px;
-		margin: 0 5px 0 0;
+		margin: 5px;
 	}
 	input{
-		margin: 0 5px 0 0;
+		margin: 5px;
 	}
 	input[type="text"]{
 		border: 1px solid $darkColor;
 	}
+	button{
+		margin: 5px;
+	}
 }
 
 .numberInput{
-	&[name="age"]{
-		width: 40px;
-	}
-	width: 70px;
+	width: 40px;
 	outline-color: $highlightColor;
 	padding: 5px;
 	border: none;
@@ -270,7 +282,9 @@ main{
 		.myDietTotalCount{
 			background-color: $lightColor;
 			color:$darkColor;
-			display: inline-block;
+			display: block;
+			width: 70%;
+			margin: 0 auto;
 			padding: 8px 15px;
 			-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 			-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
