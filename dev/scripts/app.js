@@ -10,7 +10,7 @@ class App extends React.Component {
 			foods: [],
 			brand:"",
 			search:"",
-			itemInfo:["","",0,0,0,0,0,0],
+			itemInfo:["Please select","an item",0,0,0,0,0,0],
 			myDietItems:[],
 			totalCount:["","",0,0,0,0,0,0]
 		}
@@ -63,80 +63,104 @@ class App extends React.Component {
 			<div className="container">
 				<header>
 					<div>
-					hello
+						<svg>
+							<g>
+								<path fill="#BF8773" d="M99.369,41c0,4.156-3.343,8-7.468,8H8.1c-4.125,0-7.469-3.844-7.469-8l0,0c0-4.156,3.343-8,7.469-8h83.802
+								C96.026,33,99.369,36.844,99.369,41L99.369,41z"/>
+								<path fill="#BF8773" d="M50.307,53h-0.612H5.231c0,9,4.479,17,8.474,17H49.39h1.222h35.684c3.996,0,8.475-8,8.475-17H50.307z"/>
+								<path fill="#BF8773" d="M50.001,0.777C25.289,0.777,5.255,13,5.255,30c15.685,0,75.996,0,89.491,0
+								C94.746,13,74.712,0.777,50.001,0.777z M19.328,22.972c-1.242,0-2.248-1.006-2.248-2.248c0-1.241,1.006-2.247,2.248-2.247
+								s2.248,1.006,2.248,2.247C21.576,21.966,20.57,22.972,19.328,22.972z M25.583,15.153c-1.241,0-2.248-1.007-2.248-2.248
+								c0-1.242,1.007-2.248,2.248-2.248c1.242,0,2.249,1.006,2.249,2.248C27.831,14.146,26.824,15.153,25.583,15.153z M29.688,23.95
+								c-1.242,0-2.248-1.008-2.248-2.248c0-1.242,1.006-2.249,2.248-2.249c1.241,0,2.247,1.007,2.247,2.249
+								C31.935,22.942,30.929,23.95,29.688,23.95z"/>
+							</g>
+						</svg>
 					</div>
 					<div>
 						random red section
 					</div>
 				</header>
 				<section>
-					<div className="sideBar"> tweet </div>
-					<CalculateNutrients />
-					<div className="searchFormDiv box">
-						<h1> search</h1>
-						<form className="searchForm" onSubmit={(e) => this.searchFoods(e, this.state.search, this.state.brand)}>
-							<div className="brandInputs">
-							<div className="foodsBrand">
-								<input type="radio" name="brand" id="mcdonalds" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000053"/>
-								<label htmlFor="mcdonalds"><img className="brandLogos" src="/brandLogos/mcdonalds.png" alt="McDonalds"/></label>
-							</div>
-							<div className="foodsBrand">
-								<input type="radio" name="brand" id="kfc" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c00001e"/>
-								<label htmlFor="kfc"><img className="brandLogos" src="/brandLogos/kfc.png" alt="KFC"/></label>
-							</div>
-							<div className="foodsBrand">
-								<input type="radio" name="brand" id="burgerking" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c00000a"/>
-								<label htmlFor="burgerking"><img className="brandLogos" src="/brandLogos/bk.png" alt="Burger King"/></label>
-							</div>
-							<div className="foodsBrand">
-								<input type="radio" name="brand" id="wendys" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c00000f"/>
-								<label htmlFor="wendys" ><img className="brandLogos" src="/brandLogos/wendys.png" alt="Wendy's"/></label>
-							</div>
-							<div className="foodsBrand">
-								<input type="radio" name="brand" id="aw" onChange={this.handleRadioChange} value="51db37b8176fe9790a898af4"/>
-								<label htmlFor="aw" ><img className="brandLogos" src="/brandLogos/aw.png" alt="A&W"/></label>
-							</div>
-							<div className="foodsBrand">
-								<input type="radio" name="brand" id="arbys" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000023"/>
-								<label htmlFor="arbys"><img className="brandLogos" src="/brandLogos/arbys.png" alt="Arby's"/></label>
-							</div>
-							<div className="foodsBrand">
-								<input type="radio" name="brand" id="tims" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000094"/>
-								<label htmlFor="tims"><img className="brandLogos" src="/brandLogos/tims.png" alt="Tim Hortons"/></label>
-							</div>
-							<div className="foodsBrand">
-								<input type="radio" name="brand" id="dairyqueen" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000027"/>
-								<label htmlFor="dairyqueen" ><img className="brandLogos" src="/brandLogos/dq.png" alt="Dairy Queen"/></label>
-							</div>
-							<div className="foodsBrand">
-								<input type="radio" name="brand" id="fiveguys" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c00003f"/>
-								<label htmlFor="fiveguys" ><img className="brandLogos" src="/brandLogos/fiveguys.png" alt="Five Guys"/></label>
-							</div>
-							<div className="foodsBrand">
-								<input type="radio" name="brand" id="tacobell" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000020"/>
-								<label htmlFor="tacobell" ><img className="brandLogos" src="/brandLogos/taco.png" alt="Taco Bell"/></label>
-							</div>
-							<div className="foodsBrand">
-								<input type="radio" name="brand" id="popeyes" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000029"/>
-								<label htmlFor="popeyes" ><img className="brandLogos" src="/brandLogos/popeyes.png" alt="Popeyes"/></label>
-							</div>
-							<div className="foodsBrand">
-								<input type="radio" name="brand" id="newyorkfries" onChange={this.handleRadioChange} value="521b95444a56d006cae29a0e"/>
-								<label htmlFor="newyorkfries" ><img className="brandLogos" src="/brandLogos/nyf.png" alt="New York Fries"/></label>
-							</div>
-							</div>
-							<div>
-								<input type="text" name="search" id="search" placeholder="Search item" onChange={this.handleChange} value={this.state.search}/>
-								<button>Search</button>
-							</div>
-						</form>
+					<div className="sideBar">
+						<p><a href=""><i className="fa fa-book" aria-hidden="true"></i></a></p>
+						<p><a href=""><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
 					</div>
+					<CalculateNutrients 
+						calories={this.state.totalCount[2]} 
+						proteins={this.state.totalCount[5]} 
+						carbs={this.state.totalCount[6]} 
+						fats={this.state.totalCount[7]} 
+						sodium={this.state.totalCount[4]} 
+						sugars={this.state.totalCount[3]}
+					/>
+					<article className="searchFormDiv box">
+						<h1> search</h1>
+						<div>
+							<form className="searchForm" onSubmit={(e) => this.searchFoods(e, this.state.search, this.state.brand)}>
+								<div className="brandInputs">
+								<div className="foodsBrand">
+									<input type="radio" name="brand" id="mcdonalds" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000053"/>
+									<label htmlFor="mcdonalds"><img className="brandLogos" src="/brandLogos/mcdonalds.png" alt="McDonalds"/></label>
+								</div>
+								<div className="foodsBrand">
+									<input type="radio" name="brand" id="kfc" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c00001e"/>
+									<label htmlFor="kfc"><img className="brandLogos" src="/brandLogos/kfc.png" alt="KFC"/></label>
+								</div>
+								<div className="foodsBrand">
+									<input type="radio" name="brand" id="burgerking" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c00000a"/>
+									<label htmlFor="burgerking"><img className="brandLogos" src="/brandLogos/bk.png" alt="Burger King"/></label>
+								</div>
+								<div className="foodsBrand">
+									<input type="radio" name="brand" id="wendys" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c00000f"/>
+									<label htmlFor="wendys" ><img className="brandLogos" src="/brandLogos/wendys.png" alt="Wendy's"/></label>
+								</div>
+								<div className="foodsBrand">
+									<input type="radio" name="brand" id="aw" onChange={this.handleRadioChange} value="51db37b8176fe9790a898af4"/>
+									<label htmlFor="aw" ><img className="brandLogos" src="/brandLogos/aw.png" alt="A&W"/></label>
+								</div>
+								<div className="foodsBrand">
+									<input type="radio" name="brand" id="arbys" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000023"/>
+									<label htmlFor="arbys"><img className="brandLogos" src="/brandLogos/arbys.png" alt="Arby's"/></label>
+								</div>
+								<div className="foodsBrand">
+									<input type="radio" name="brand" id="tims" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000094"/>
+									<label htmlFor="tims"><img className="brandLogos" src="/brandLogos/tims.png" alt="Tim Hortons"/></label>
+								</div>
+								<div className="foodsBrand">
+									<input type="radio" name="brand" id="dairyqueen" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000027"/>
+									<label htmlFor="dairyqueen" ><img className="brandLogos" src="/brandLogos/dq.png" alt="Dairy Queen"/></label>
+								</div>
+								<div className="foodsBrand">
+									<input type="radio" name="brand" id="fiveguys" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c00003f"/>
+									<label htmlFor="fiveguys" ><img className="brandLogos" src="/brandLogos/fiveguys.png" alt="Five Guys"/></label>
+								</div>
+								<div className="foodsBrand">
+									<input type="radio" name="brand" id="tacobell" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000020"/>
+									<label htmlFor="tacobell" ><img className="brandLogos" src="/brandLogos/taco.png" alt="Taco Bell"/></label>
+								</div>
+								<div className="foodsBrand">
+									<input type="radio" name="brand" id="popeyes" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000029"/>
+									<label htmlFor="popeyes" ><img className="brandLogos" src="/brandLogos/popeyes.png" alt="Popeyes"/></label>
+								</div>
+								<div className="foodsBrand">
+									<input type="radio" name="brand" id="newyorkfries" onChange={this.handleRadioChange} value="521b95444a56d006cae29a0e"/>
+									<label htmlFor="newyorkfries" ><img className="brandLogos" src="/brandLogos/nyf.png" alt="New York Fries"/></label>
+								</div>
+								</div>
+								<div>
+									<input type="text" name="search" id="search" placeholder="Search item" onChange={this.handleChange} value={this.state.search}/>
+									<button>Search</button>
+								</div>
+							</form>
+						</div>
+					</article>
 				</section>
 				<main>
-					<div className="sideBar"> <div>&copy;<a href="http://codedbyjessica.com/">CodedByJessica</a></div> </div>
-					<div className="itemsList box">
+					<div className="sideBar"> <div>&copy; 2017 <a href="http://codedbyjessica.com/" target="_blank">Coded By Jessica</a> | Powered by <a href="https://www.nutritionix.com/business/api" target="_blank">Nutritionix API</a></div> </div>
+					<article className="itemsList box">
 						<div>
-							{`Showing results for ${this.state.search}`}
+							<h2>{`Showing results for ${this.state.search}`}</h2>
 								{this.state.foods.map((food) => {
 								return(
 									<div key={food._id} className="itemsList__food">
@@ -147,31 +171,33 @@ class App extends React.Component {
 								)
 								})}
 						</div>
-					</div>
-					<div className="itemInfoCard box">
+					</article>
+					<article className="itemInfoCard box">
 						<div className="itemInfo">
 							<h2>{`${this.state.itemInfo[0]}`}</h2>
 							<h3>{`${this.state.itemInfo[1]}`}</h3>
-							<p>{`Calories: ${this.state.itemInfo[2]}kcal`}</p>
-							<p>{`sugars: ${this.state.itemInfo[3]}g`}</p>
-							<p>{`sodium: ${this.state.itemInfo[4]}mg`}</p>
-							<p>{`protein: ${this.state.itemInfo[5]}g`}</p>
-							<p>{`Carbs: ${this.state.itemInfo[6]}g`}</p>
-							<p>{`Fat: ${this.state.itemInfo[7]}g`}</p>
+							<h4>{`Calories: ${this.state.itemInfo[2]}kcal`}</h4>
+							<h4>{`Protein: ${this.state.itemInfo[5]}g`}</h4>
+							<h4>{`Carbs: ${this.state.itemInfo[6]}g`}</h4>
+							<h4>{`Fat: ${this.state.itemInfo[7]}g`}</h4>
+							<h4>{`Sodium: ${this.state.itemInfo[4]}mg`}</h4>
+							<h4>{`Sugars: ${this.state.itemInfo[3]}g`}</h4>
 						</div>
 						<div className="itemAdd">
 							<button onClick={this.addToDiet}> Add to my diet</button>
 						</div>
-					</div>
-					<div className="myDiet box">
+					</article>
+					<article className="myDiet box">
 						<div>
 							<h2>My Diet</h2>
-							<h4>Total Count</h4>
-							<p>{`Calories: ${this.state.totalCount[2]}kcal`} | {`Sugars: ${this.state.totalCount[3]}g`}</p>
-							<p>{`sodium: ${this.state.totalCount[4]}mg`} | {`protein: ${this.state.totalCount[5]}g`}</p>
-							<p>{`carbs: ${this.state.totalCount[6]}mg`} | {`fat: ${this.state.totalCount[7]}g`}</p>
+							<div className="myDietTotalCount">
+								<h4>Total Count</h4>
+								<p>Calories: <span>{`${this.state.totalCount[2]}`}</span>kcal | Proteins: <span>{`${this.state.totalCount[5]}`}</span>g</p>
+								<p>Carbs: <span>{`${this.state.totalCount[6]}`}</span>g | Fats: <span>{`${this.state.totalCount[7]}`}</span>g</p>
+								<p>Sodium: <span>{`${this.state.totalCount[4]}`}</span>mg | Sugars: <span>{`${this.state.totalCount[3]}`}</span>g</p>
+							</div>
 						</div>
-						<article className="myDietSection">
+						<aside className="myDietSection">
 						{this.state.myDietItems.map((myDietItem, i) => {
 							return(
 								<div className="myDietItem">
@@ -183,8 +209,8 @@ class App extends React.Component {
 								</div>
 							)
 						})}
-						</article>
-					</div>
+						</aside>
+					</article>
 				</main>
 			</div>
 		)
@@ -264,7 +290,7 @@ class CalculateNutrients extends React.Component {
 			[e.target.name]: e.target.value
 		});
 	}
-	render() {
+	render(props) {
 		return(
 			<div className="myInfo box">
 				<h1>My info</h1>
@@ -284,7 +310,7 @@ class CalculateNutrients extends React.Component {
 					<input type="radio" name="activity" value="medium" id="medium" onChange={this.handleChange} /> <label htmlFor="medium">Medium</label>
 					<input type="radio" name="activity" value="high" id="high" onChange={this.handleChange} /> <label htmlFor="high">High</label>
 				</div>
-				<div><button>stbmipoo</button></div>
+				<div><button>Submit</button></div>
 				</form>
 				<div>
 					<h3>Your recommended daily intake:</h3>
@@ -292,6 +318,12 @@ class CalculateNutrients extends React.Component {
 					<span>{`Proteins: ${this.state.proteinNeeded}g`}</span>
 					<span>{`Carbs: ${this.state.carbsNeeded}g`}</span>
 					<span>{`Fats: ${this.state.fatNeeded}g`}</span>
+				</div>
+				<div>
+					<h3>Nutrients to add to your diet</h3>
+					<p>Calories: <span>{`${this.state.caloriesNeeded - this.props.calories}`}</span>kcal | Proteins: <span>{`${this.state.proteinNeeded - this.props.proteins}`}</span>g</p>
+					<p>Carbs: <span>{`${this.state.carbsNeeded - this.props.carbs}`}</span>g | Fats: <span>{`${this.state.fatNeeded - this.props.fats}`}</span>g</p>
+					<p>Sodium: <span>{`${2300 - this.props.sodium}`}</span>mg | Sugars: <span>{`${40 - this.props.sugars}`}</span>g</p>
 				</div>
 			</div>
 		)
@@ -312,7 +344,7 @@ class CalculateNutrients extends React.Component {
 		}else{
 			var caloriesNeeded = Math.round(bmr)
 		}
-		var proteinNeeded = 0.9*this.state.weight
+		var proteinNeeded = Math.round(0.9*this.state.weight)
 		var fatNeeded = 0.3*caloriesNeeded
 		var carbsNeeded = 0.6*caloriesNeeded
 		this.setState({

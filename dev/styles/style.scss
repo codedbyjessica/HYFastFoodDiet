@@ -17,6 +17,14 @@ h1{
 	font-size: 24px;
 }
 
+h2{
+	margin-bottom: 10px;
+}
+
+p{
+	margin: 8px 0;
+}
+
 body{
 	background-color: $mediumColor;
 	font-family: 'Roboto', sans-serif;
@@ -37,11 +45,9 @@ section{
 	display:flex;
 }
 
-
 .box > div{
 	padding: 20px;
 }
-
 
 header{
 	height: 100px;
@@ -49,6 +55,9 @@ header{
 	div:first-child{
 		width: 68.6%;
 		background-color: $primaryColorLight;
+		svg{
+			padding: 10px 20px;
+		}
 	}
 	div:nth-child(2){
 		width: 31.3%;
@@ -62,10 +71,24 @@ header{
 	background-color: $darkColor;
 	color: $primaryColorDark;
 	padding: 10px;
+	i{
+		color: $primaryColorDark;
+		text-decoration: none;
+		font-size: 20px;
+		margin-bottom: 20px;
+		&:hover{
+			color: $lightColor;
+		}
+	}
 	div{
+		width: 600px;
+		color: $primaryColorLight;
 		transform: rotate(-90deg);
 		-ms-transform: rotate(-90deg); 
 		-webkit-transform: rotate(-90deg);
+		letter-spacing: 1px;
+		margin-top: -10px;
+		margin-left: -280px;
 		a{
 			color: $primaryColorDark;
 			text-decoration: none;
@@ -105,8 +128,8 @@ header{
 		background-color: $primaryColorDark;
 	}
 }
-// input
 
+// input
 .searchForm{
 	text-align: center;
 	input[type="radio"] {
@@ -135,11 +158,12 @@ header{
 		}
 	}
 	input[type="text"]{
-		padding: 7px;
+		padding: 5px;
+		margin-top: 25px;
 		margin-right: 5px;
 		width: 50%;
 		outline-color: $primaryColorDark;
-		border: none;
+		border: 1px solid $darkColor;
 			&::-webkit-input-placeholder{
 				color: $darkColor;
 			}
@@ -194,6 +218,9 @@ header{
 	input{
 		margin: 0 5px 0 0;
 	}
+	input[type="text"]{
+		border: 1px solid $darkColor;
+	}
 }
 
 .numberInput{
@@ -211,17 +238,16 @@ input[type="text"].numberInput, textarea {
 }
 
 button {
-	background-color: transparent;
-	color: black;
-	padding: 5px;
-	border: 1px solid black;
+	background-color: $highlightColor;
+	color: $lightColor;
+	padding: 5px 10px;
+	border: 1px solid $darkColor;
 }
 
 button:hover {
-	background-color: grey;
-	color: white;
+	background-color: $lightColor;
+	color: $darkColor;
 }
-
 
 main{
 	display:flex;
@@ -232,12 +258,24 @@ main{
 	.itemInfoCard{
 		width: 31.3%;
 		background-color: $primaryColorLight;
+		h4{
+			margin: 10px 0;
+		}
 	}
 	.myDiet{
 		text-align: center;
 		width: 31.3%;
 		background-color: $highlightColor;
 		color: $lightColor;
+		.myDietTotalCount{
+			background-color: $lightColor;
+			color:$darkColor;
+			display: inline-block;
+			padding: 8px 15px;
+			-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+			-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+			box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+		}
 	}
 }
 
@@ -270,4 +308,3 @@ main{
 		margin: 0;
 	}
 }
-
