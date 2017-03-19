@@ -22,7 +22,7 @@ gulp.task("styles", () => {
 });
 
 gulp.task('js', () => {
-    browserify('dev/app.js')
+    browserify('dev/scripts/app.js')
         .transform('babelify', {
             presets: ['es2015','react']
         })
@@ -34,7 +34,7 @@ gulp.task('js', () => {
         .pipe(source('app.js'))
         .pipe(buffer())
         .pipe(plumber())
-        .pipe(gulp.dest('public/'))
+        .pipe(gulp.dest('public/scripts'))
         .pipe(reload({stream:true}));
 });
 
@@ -46,8 +46,8 @@ gulp.task('bs', () => {
     });
 });
 
-
 gulp.task('default', ['styles','js','bs'], () => {
-    gulp.watch('dev/**/*.js',['js']);
-    gulp.watch('./public/style.css',reload);
+    gulp.watch('./dev/scripts/*.js', ['js']);
+    gulp.watch('./dev/styles/*.scss', ['styles']);
+    gulp.watch('./*.html', reload);
 });

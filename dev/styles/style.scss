@@ -1,0 +1,273 @@
+@import "partials/norm";
+
+$primaryColorLight: #f5cf8a;
+$primaryColorDark: #c79685;
+$highlightColor: #F24452;
+$lightColor: #F2F2F2;
+$mediumColor: #999;
+$darkColor: #333;
+
+h1, h2, h3, h4, h5 {
+	margin: 0;
+}
+
+h1{
+	padding: 10px 15px;
+	text-transform: uppercase;
+	font-size: 24px;
+}
+
+body{
+	background-color: $mediumColor;
+	font-family: 'Roboto', sans-serif;
+	font-size: 12px;
+	color:$darkColor;
+}
+
+.container{
+	width: 95%;
+	margin: 0 auto;
+	background-color: $mediumColor;
+	-webkit-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5);
+	-moz-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5);
+	box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5);
+}
+
+section{
+	display:flex;
+}
+
+
+.box > div{
+	padding: 20px;
+}
+
+
+header{
+	height: 100px;
+	display: flex;
+	div:first-child{
+		width: 68.6%;
+		background-color: $primaryColorLight;
+	}
+	div:nth-child(2){
+		width: 31.3%;
+		background-color: $highlightColor;
+	}
+}
+
+.sideBar{
+	text-align: center;
+	width: 6%;
+	background-color: $darkColor;
+	color: $primaryColorDark;
+	padding: 10px;
+	div{
+		transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg); 
+		-webkit-transform: rotate(-90deg);
+		a{
+			color: $primaryColorDark;
+			text-decoration: none;
+			&:hover{
+				color: $lightColor;
+			}
+		}
+	}
+}
+
+.myInfo{
+	text-align:center;
+	order: 1;
+	width: 31.3%;
+	background-color: $primaryColorDark;
+	div{
+		padding: 8px 0;
+		&:first-child{
+			padding-top:15px;
+		}
+		&:last-child{
+			padding-bottom: 15px;
+		}
+	}
+	h1{
+		background-color: $lightColor;
+	}
+	span{
+		padding: 0 5px;
+	}
+}
+
+.searchFormDiv{
+	width: 62.6%;
+	background-color: $lightColor;
+	h1{
+		background-color: $primaryColorDark;
+	}
+}
+// input
+
+.searchForm{
+	text-align: center;
+	input[type="radio"] {
+		display:none;
+	}
+
+	input[type="radio"] ~ label {
+		img{
+		-webkit-filter: brightness(-100);
+		filter: brightness(-100);
+		}
+	}
+
+	input[type="radio"]:checked ~ label {
+		img{
+		-webkit-filter: none;
+		filter: none;
+		}
+	}
+
+	label{
+		display: inline-block;
+		text-align:center;
+		img{
+			width: 90%;
+		}
+	}
+	input[type="text"]{
+		padding: 7px;
+		margin-right: 5px;
+		width: 50%;
+		outline-color: $primaryColorDark;
+		border: none;
+			&::-webkit-input-placeholder{
+				color: $darkColor;
+			}
+			&:-moz-placeholder {
+				color: $darkColor;
+			}
+			&::-moz-placeholder {
+				color: $darkColor;
+			}
+			&:-ms-input-placeholder { 
+				color: $darkColor;
+			}
+	}
+	input[type="text"], textarea{
+		background-color: $primaryColorLight;
+	}
+}
+
+.brandInputs{
+	display:flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.foodsBrand {
+	display:inline;
+	width: 16%;
+}
+
+.myInfoForm div{
+	input[type="radio"] {
+		display:none;
+	}
+
+	input[type="radio"] + label {
+		background: none;
+		border: 1px solid black;
+	}
+
+	input[type="radio"]:checked + label {
+		background-color: $highlightColor;
+		color: $lightColor;
+	}
+
+	label{
+		display: inline-block;
+		padding:5px;
+		margin: 0 5px 0 0;
+	}
+	input{
+		margin: 0 5px 0 0;
+	}
+}
+
+.numberInput{
+	&[name="age"]{
+		width: 40px;
+	}
+	width: 70px;
+	outline-color: $highlightColor;
+	padding: 5px;
+	border: none;
+}
+
+input[type="text"].numberInput, textarea {
+	background-color : $lightColor;
+}
+
+button {
+	background-color: transparent;
+	color: black;
+	padding: 5px;
+	border: 1px solid black;
+}
+
+button:hover {
+	background-color: grey;
+	color: white;
+}
+
+
+main{
+	display:flex;
+	.itemsList{
+		width: 31.3%;
+		background-color: $primaryColorDark;
+	}
+	.itemInfoCard{
+		width: 31.3%;
+		background-color: $primaryColorLight;
+	}
+	.myDiet{
+		text-align: center;
+		width: 31.3%;
+		background-color: $highlightColor;
+		color: $lightColor;
+	}
+}
+
+.itemsList__food{
+	cursor:pointer;
+	border: 1px solid black;
+	background-color: none;
+	&:hover{
+		background-color: white;
+	}
+	p{
+		padding: 5px;
+		margin: 0;
+	}
+}
+
+.myDietItem{
+	background-color: white;
+	margin: 0 20px 10px 20px;
+	padding: 10px;			
+	color: $darkColor;
+	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	button{
+		margin-top: 5px;
+	}
+	h1,h2,h3,h4,h5,p{
+		padding: 0;
+		margin: 0;
+	}
+}
+
