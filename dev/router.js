@@ -1,7 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Router, Route, browserHistory } from 'react-router';
 import { ajax } from "jquery";
 import DietItem from "./dietItem";
+
+class User extends React.Component{
+	render(){
+		return (
+			<div>THIS IS THE USER AREA</div>
+		)
+	}
+}
 
 class App extends React.Component {
 	constructor(){
@@ -86,6 +95,7 @@ class App extends React.Component {
 						</svg>
 					</div>
 					<div>
+						<Link to="/user">USER STUFF HERE HUEHUEHUEHUE</Link>
 						random red section
 					</div>
 				</header>
@@ -425,3 +435,10 @@ const NutrientsToAdd = function(props){
 
 
 ReactDOM.render(<App />, document.getElementById("app"));
+
+ReactDOM.render(
+<Router history={browserHistory}>
+    <Route path="/" component={App} />
+    <Route path="/user" component={User} />
+
+</Router>, document.getElementById('app'));

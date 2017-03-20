@@ -2,10 +2,14 @@
 
 $primaryColorLight: #f5cf8a;
 $primaryColorDark: #c79685;
-$highlightColor: #F24452;
+$highlightColor: #e23d4a;
 $lightColor: #F2F2F2;
 $mediumColor: #999;
 $darkColor: #333;
+
+a:hover, button:hover, p:hover{
+	transition: all 0.5s ease;
+}
 
 h1, h2, h3, h4, h5 {
 	margin: 0;
@@ -112,9 +116,16 @@ header{
 	}
 	span{
 		font-weight: bold;
-		color: #269328;
 		padding-right: 3px;
 	}
+}
+
+.positive{
+	color: #269328;
+}
+
+.negative{
+	color: red;
 }
 
 .myInfoTop{
@@ -304,6 +315,11 @@ main{
 		padding: 5px;
 		margin: 0;
 	}
+}
+
+
+.myDietClearAll{
+	margin-bottom: 10px;
 }
 
 .myDietItem{

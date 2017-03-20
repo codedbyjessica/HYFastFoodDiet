@@ -12,7 +12,7 @@ class App extends React.Component {
 			search:"",
 			itemInfo:["Please select","an item",0,0,0,0,0,0],
 			myDietItems:[],
-			totalCount:["","",0,0,0,0,0,0],
+			totalCount:["","",0,0,0,0,0,0]
 		}
 		this.addToDiet = this.addToDiet.bind(this);
 		this.removeFromDiet = this.removeFromDiet.bind(this);
@@ -22,8 +22,6 @@ class App extends React.Component {
 	addToDiet(e){
 		e.preventDefault();
 		const dietState = Array.from(this.state.myDietItems);
-		//I have a bunch of arrays in one array
-		// take those arrays and add values of the same index
 		dietState.push(this.state.itemInfo);
 		const totalCount = dietState.reduce(function (r, a) {
 			a.forEach(function (b, i) {
@@ -46,12 +44,6 @@ class App extends React.Component {
 		this.setState({
 			myDietItems: dietState,
 			totalCount: totalCount
-		});
-	}
-	clearAll(e){
-		this.setState({
-			myDietItems:[],
-			totalCount:["","",0,0,0,0,0,0],
 		});
 	}
 	handleChange(e) {
@@ -200,18 +192,24 @@ class App extends React.Component {
 							<h2>My Diet</h2>
 							<div className="myDietTotalCount">
 								<h4>Total Count</h4>
-								<p>Calories: <span>{`${this.state.totalCount[2] || 0}`}</span>kcal | Proteins: <span>{`${this.state.totalCount[5] || 0}`}</span>g</p>
-								<p>Carbs: <span>{`${this.state.totalCount[6] || 0}`}</span>g | Fats: <span>{`${this.state.totalCount[7] || 0}`}</span>g</p>
-								<p>Sodium: <span>{`${this.state.totalCount[4] || 0}`}</span>mg | Sugars: <span>{`${this.state.totalCount[3] || 0}`}</span>g</p>
+								<p>Calories: <span>{`${this.state.totalCount[2]}`}</span>kcal | Proteins: <span>{`${this.state.totalCount[5]}`}</span>g</p>
+								<p>Carbs: <span>{`${this.state.totalCount[6]}`}</span>g | Fats: <span>{`${this.state.totalCount[7]}`}</span>g</p>
+								<p>Sodium: <span>{`${this.state.totalCount[4]}`}</span>mg | Sugars: <span>{`${this.state.totalCount[3]}`}</span>g</p>
 							</div>
 						</div>
-						<button className="myDietClearAll" onClick={(e) => this.clearAll(e)}>Clear All</button>
-						{this.state.myDietItems ? 
-						<MyDietSection 
-							myDietItemsState={this.state.myDietItems}
-							remove={this.removeFromDiet}
-						/>: ""}
-
+						<aside className="myDietSection">
+						{this.state.myDietItems.map((myDietItem, i) => {
+							return(
+								<div className="myDietItem">
+									<h4>{`${myDietItem[1]} from ${myDietItem[0]}`}</h4>
+									<p>{`Calories: ${myDietItem[2]}kcal`} | {`Sugars: ${myDietItem[3]}g`}</p>
+									<p>{`sodium: ${myDietItem[4]}mg`} | {`protein: ${myDietItem[5]}g`}</p>
+									<p>{`carbs: ${myDietItem[6]}mg`} | {`fat: ${myDietItem[7]}g`}</p>
+									<DietItem key={i} myDietItem={myDietItem} remove={this.removeFromDiet} dietIndex={i} />
+								</div>
+							)
+						})}
+						</aside>
 					</article>
 				</main>
 			</div>
@@ -270,26 +268,6 @@ class App extends React.Component {
 	}
 }
 
-class MyDietSection extends React.Component{
-	render(){
-		return(
-		<aside className="myDietSection">
-		{this.props.myDietItemsState.map((myDietItem, i) => { 
-			console.log("lalala");
-			return(
-				<div className="myDietItem">
-					<h4>{`${myDietItem[1]} from ${myDietItem[0]}`}</h4>
-					<p>{`Calories: ${myDietItem[2]}kcal`} | {`Sugars: ${myDietItem[3]}g`}</p>
-					<p>{`sodium: ${myDietItem[4]}mg`} | {`protein: ${myDietItem[5]}g`}</p>
-					<p>{`carbs: ${myDietItem[6]}mg`} | {`fat: ${myDietItem[7]}g`}</p>
-					<DietItem key={i} myDietItem={myDietItem} remove={this.props.remove} dietIndex={i} />
-				</div>
-			)
-		})}
-		</aside>
-		)
-	}
-}
 
 class CalculateNutrients extends React.Component {
 	constructor(){
@@ -325,11 +303,11 @@ class CalculateNutrients extends React.Component {
 				</div>
 				<div>
 					Age:
-					<input type="text" name="age" className="numberInput" placeholder="Age" onChange={this.handleChange} />
+					<input type="text" name="age" className="numberInput" value="0" placeholder="Age" onChange={this.handleChange} />
 					Weight(kg)
-					<input type="text" name="weight" className="numberInput" placeholder="Weight(kg)" onChange={this.handleChange} />
+					<input type="text" name="weight" className="numberInput" value="0" placeholder="Weight(kg)" onChange={this.handleChange} />
 					Height(cm)
-					<input type="text" name="height" className="numberInput" placeholder="Height(cm)" onChange={this.handleChange} />
+					<input type="text" name="height" className="numberInput" value="0" placeholder="Height(cm)" onChange={this.handleChange} />
 				</div>
 				<div>
 					Exercise level:
@@ -339,8 +317,6 @@ class CalculateNutrients extends React.Component {
 				</div>
 				<div><button onClick={this.ShowMyNutrients}>Submit</button></div>
 				</form>
-
-
 				{
 					this.state.visible
 					? <NutrientsToAdd 
@@ -394,18 +370,6 @@ class CalculateNutrients extends React.Component {
 }
 
 const NutrientsToAdd = function(props){
-	let calculatedCalories = props.caloriesNeeded - props.calories
-	let calculatedProteins = props.proteinNeeded - props.proteins
-	let calculatedCarbs = props.carbsNeeded - props.carbs
-	let calulatedFat = props.fatNeeded - props.fats
-	let calculatedSodium = 2300 - props.sodium
-	let calculatedSugars = 40-props.sugars
-	let numberColor = ""
-	if(calculatedCalories >= 0){
-		numberColor += "positive"
-	} else {
-		numberColor += "negative"
-	};
 	return(
 		<div>
 			<div>
@@ -415,13 +379,32 @@ const NutrientsToAdd = function(props){
 			</div>
 			<div className="nutrientsToAdd">
 				<h3>Nutrients to add to your diet</h3>
-				<p>Calories: <span className={numberColor}>{`${calculatedCalories || 0}`}</span>kcal | Proteins: <span className={numberColor}>{`${calculatedProteins || 0}`}</span>g</p>
-				<p>Carbs: <span className={numberColor}>{`${calculatedCarbs || 0}`}</span>g | Fats: <span className={numberColor}>{`${calulatedFat || 0}`}</span>g</p>
-				<p>Sodium: <span className={numberColor}>{`${calculatedSodium || 0}`}</span>mg | Sugars: <span className={numberColor}>{`${calculatedSugars || 0}`}</span>g</p>
+				<p>Calories: <span>{`${props.caloriesNeeded - props.calories}`}</span>kcal | Proteins: <span>{`${props.proteinNeeded - props.proteins}`}</span>g</p>
+				<p>Carbs: <span>{`${props.carbsNeeded - props.carbs}`}</span>g | Fats: <span>{`${props.fatNeeded - props.fats}`}</span>g</p>
+				<p>Sodium: <span>{`${2300 - props.sodium}`}</span>mg | Sugars: <span>{`${40 - props.sugars}`}</span>g</p>
 			</div>
 		</div>
 	)
 }
 
+
+
+// const NutrientsToAdd = function(props){
+// 	return(
+// 		<div>
+// 			<div>
+// 				<h3>Your recommended daily intake:</h3>
+// 				<p>{`Calories: ${props.caloriesNeeded} kcal`} | {`Proteins: ${props.proteinNeeded} g`}</p>
+// 				<p>{`Carbs: ${props.carbsNeeded} g`} |  {`Fats: ${props.fatNeeded} g`}</p>
+// 			</div>
+// 			<div className="nutrientsToAdd">
+// 				<h3>Nutrients to add to your diet</h3>
+// 				<p>Calories: <span>{`${props.caloriesNeeded - props.calories}`}</span>kcal | Proteins: <span>{`${props.proteinNeeded - props.proteins}`}</span>g</p>
+// 				<p>Carbs: <span>{`${props.carbsNeeded - props.carbs}`}</span>g | Fats: <span>{`${props.fatNeeded - props.fats}`}</span>g</p>
+// 				<p>Sodium: <span>{`${2300 - props.sodium}`}</span>mg | Sugars: <span>{`${40 - props.sugars}`}</span>g</p>
+// 			</div>
+// 		</div>
+// 	)
+// }
 
 ReactDOM.render(<App />, document.getElementById("app"));
