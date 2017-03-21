@@ -4,6 +4,7 @@ import { Router, Route, browserHistory, Link } from 'react-router';
 import { ajax } from "jquery";
 import DietItem from "./dietItem";
 
+
 const config = {
 	apiKey: "AIzaSyCut2SB5QB85C97vjnzaAG1pPJeDssUzfA",
 	authDomain: "fastfooddiet-ead2e.firebaseapp.com",
@@ -23,33 +24,26 @@ class User extends React.Component{
 		}
 	}
 	componentDidMount(){
-		firebase.auth().onAuthStateChanged((user) => {
-			if(user){
+		const dbRef = firebase.database().ref();
 
-				const userId = firebase.auth().currentUser.uid
+		dbRef.on("value", (firebaseData) => {
+			console.log("firebasedataval", firebaseData.val());
+			const mealsArray =[];
+			const mealsData= firebaseData.val();
 
-				const dbRef = firebase.database().ref(userId)
-				dbRef.on("value", (firebaseData) => {
-					console.log("firebasedataval", firebaseData.val());
-					const mealsArray =[];
-					const mealsData= firebaseData.val();
-
-					for(let mealKey in mealsData) {
-						mealsData[mealKey].key = mealKey
-					console.log("mealkey", mealsData[mealKey].key);
-						mealsArray.push(mealsData[mealKey])
-					}
-					console.log("mealsarray", mealsArray)
-					this.setState({
-						userMeals: mealsArray
-					})
-				})
+			for(let mealKey in mealsData) {
+				console.log(mealsData[mealKey]);
+				mealsArray.push(mealsData[mealKey])
 			}
+			console.log("mealsarray", mealsArray)
+			this.setState({
+				userMeals: mealsArray
+			})
 		})
 	}
 	removeMeal(mealToRemove){
 		console.log("meal to remove", mealToRemove);
-		const dbRef = firebase.database().ref(firebase.auth().currentUser.uid + "/" + mealToRemove);
+		const dbRef = firebase.database().ref(mealToRemove);
 		dbRef.remove();
 	}
 	render(){
@@ -59,30 +53,27 @@ class User extends React.Component{
 					<p><a href=""><i className="fa fa-book" aria-hidden="true"></i></a></p>
 					<p><a href=""><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
 				</div>
-				<aside className="mealsContent">
-					<h2>My Saved Meals</h2>
-					<div className="userMeals">
+				<aside className="userMeals">
 					{this.state.userMeals.map((userMeal) => { 
-						console.log("usermeal",userMeal.key);
+						console.log("usermeal",userMeal);
 						console.log("usermeal 1", userMeal.userMeal)
 						return(
-							<div className="eachMeal" key={userMeal.key}> 
-								<h2>My Meal</h2>
-								<button onClick={() => this.removeMeal(userMeal.key)}>Remove Meal</button>
-								{userMeal.userMeal.map((userMealItem, i) =>{
-									return(
-									<div className="myDietItem" key={i}>
-										<h4>{`${userMealItem[1]} from ${userMealItem[0]}`}</h4>
-										<p>{`Calories: ${userMealItem[2]}kcal`} | {`protein: ${userMealItem[5]}g`}</p>
-										<p>{`carbs: ${userMealItem[6]}mg`} | {`fat: ${userMealItem[7]}g`}</p>
-										<p>{`sodium: ${userMealItem[4]}mg`} | {`Sugars: ${userMealItem[3]}g`}</p>
-									</div>
-									)
-								})}
+							<div className="eachMeal" > 
+							<h2>My Meal</h2>
+							<button onClick={() => this.removeMeal(userMeal.key)}>Remove Meal</button>
+							{userMeal.userMeal.map((userMealItem, i) =>{
+								return(
+							<div className="myDietItem" key={i}>
+								<h4>{`${userMealItem[1]} from ${userMealItem[0]}`}</h4>
+								<p>{`Calories: ${userMealItem[2]}kcal`} | {`protein: ${userMealItem[5]}g`}</p>
+								<p>{`carbs: ${userMealItem[6]}mg`} | {`fat: ${userMealItem[7]}g`}</p>
+								<p>{`sodium: ${userMealItem[4]}mg`} | {`Sugars: ${userMealItem[3]}g`}</p>
+							</div>
+								)
+							})}
 							</div>
 						)
 					})}
-					</div>
 				</aside>
 			</div> 
 		)
@@ -109,140 +100,12 @@ class App extends React.Component {
 							</g>
 						</svg>
 					</div>
-					<div className="mainNav">
-						<nav>
-							<Link to="/"><i className="fa fa-calculator" aria-hidden="true"></i></Link>
-							<Link to="/user"><i className="fa fa-list" aria-hidden="true"></i></Link>
-						</nav>
-						<Auth />
-					</div>
+					<nav>
+						<Link to="/"><i className="fa fa-calculator" aria-hidden="true"></i></Link>
+						<Link to="/user"><i className="fa fa-list" aria-hidden="true"></i></Link>
+					</nav>
 				</header>
 			{this.props.children || <Main />}
-			</div>
-		)
-	}
-}
-
-class Auth extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			formToShow: '',
-			email: '',
-			password: '',
-			confirm: ''
-		};
-		this.formToShow = this.formToShow.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.signup = this.signup.bind(this);
-		this.login = this.login.bind(this);
-	}
-	componentDidMount(){
-
-	}
-	formToShow(e) {
-		e.preventDefault();
-		this.setState({
-			formToShow: e.target.className
-		});
-	}
-	handleChange(e) {
-		this.setState({
-			[e.target.name]: e.target.value
-		});
-	}
-	signup(e) {
-		e.preventDefault();
-		console.log("signing...");
-		console.log(this.state.email,this.state.password,this.state.confirm);
-		if(this.state.password=this.state.confirm){
-			firebase.auth()
-				.createUserWithEmailAndPassword(this.state.email, this.state.password)
-				.then((userData) => {
-					console.log("userData")
-					console.log(this.state.email)
-					this.setState({
-						formToShow: "hello"
-					});
-				});
-		}
-	}
-	login(e) {
-		e.preventDefault();
-		firebase.auth()
-			.signInWithEmailAndPassword(this.state.email, this.state.password)
-			.then((userData) =>{ 
-				alert("Welcome", this.state.email)
-					this.setState({
-						formToShow: "hello"
-					});
-			})
-	}
-	signout(e){
-		e.preventDefault();
-		firebase.auth().signOut().then(() => {
-			alert("Successfully signed out")
-		}, function(error) {
-			console.error('Sign Out Error', error);
-		});
-		location.reload();
-	}
-	render() {
-		let loginForm = '';
-		if(this.state.formToShow === 'signup') {
-			loginForm = (
-				<div className="loginForms">
-					<form onSubmit={this.signup} className="user-form">
-						<div>
-							<label htmlFor="email">Email: </label>
-							<input type="email" name="email" onChange={this.handleChange} />
-						</div>
-						<div>
-							<label htmlFor="password">Password: </label>
-							<input type="password" name="password" onChange={this.handleChange} />
-						</div>
-						<div>
-							<label htmlFor="confirm">Confirm Password:</label>
-							<input type="password" name="confirm" onChange={this.handleChange} />
-						</div>
-						<button>Sign In</button>
-					</form>
-				</div>
-			);
-		}
-		else if(this.state.formToShow === "login") {
-			loginForm = (
-				<div className="loginForms">
-					<form onSubmit={this.login} className="user-form">
-						<div>
-							<label htmlFor="email">Email: </label>
-							<input type="email" name="email" onChange={this.handleChange}/>
-						</div>
-						<div>
-							<label htmlFor="password">Password: </label>
-							<input type="password" name="password" onChange={this.handleChange}/>
-						</div>
-						<button>Log In</button>
-					</form>
-				</div>
-			);
-		}
-		else if(this.state.formToShow === "hello"){
-			loginForm = (
-				<div className="loginForms">
-					<span> Welcome! {this.state.email}</span>
-					<a href="" className="signout" onClick={this.signout}>Log Out</a>
-				</div>
-			);
-		}
-		return (
-			<div className="loginOptions">
-				<a href="" className="signup" onClick={this.formToShow}>Sign Up</a>
-				<a href="" className="login" onClick={this.formToShow}>Log In</a>
-				<a href="" className="signout" onClick={this.signout}>Log Out</a>
-				<div>
-				{loginForm}
-				</div>
 			</div>
 		)
 	}
@@ -313,12 +176,8 @@ class Main extends React.Component {
 			totalCount:["","",0,0,0,0,0,0],
 			myDietItems:[]
 		});
-		const userId = firebase.auth().currentUser.uid
-		const dbRef = firebase.database().ref(userId)
+		const dbRef = firebase.database().ref();
 		dbRef.push(usersMeal)
-
-
-
 	}
 
 	handleChange(e) {
@@ -709,6 +568,7 @@ const NutrientsToAdd = function(props){
 		</div>
 	)
 }
+
 
 ReactDOM.render(
 <Router history={browserHistory}>
