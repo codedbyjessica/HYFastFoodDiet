@@ -1,111 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router, Route, browserHistory, Link } from 'react-router';
 import { ajax } from "jquery";
 import DietItem from "./dietItem";
 
-
-const config = {
-	apiKey: "AIzaSyCut2SB5QB85C97vjnzaAG1pPJeDssUzfA",
-	authDomain: "fastfooddiet-ead2e.firebaseapp.com",
-	databaseURL: "https://fastfooddiet-ead2e.firebaseio.com",
-	storageBucket: "fastfooddiet-ead2e.appspot.com",
-	messagingSenderId: "169182799614"
-};
-firebase.initializeApp(config);
-
-//////////////////////////////////////userMeals={this.state.userMeals}///////////////////////////PASS THIS PROP SOMEWHERE!!!
-
-class User extends React.Component{
-	constructor(){
-		super();
-		this.state = {
-			userMeals:[]
-		}
-	}
-	componentDidMount(){
-		const dbRef = firebase.database().ref();
-
-		dbRef.on("value", (firebaseData) => {
-			console.log("firebasedataval", firebaseData.val());
-			const mealsArray =[];
-			const mealsData= firebaseData.val();
-
-			for(let mealKey in mealsData) {
-				console.log(mealsData[mealKey]);
-				mealsArray.push(mealsData[mealKey])
-			}
-			console.log("mealsarray", mealsArray)
-			this.setState({
-				userMeals: mealsArray
-			})
-		})
-	}
-	render(){
-		return (
-			<div className="userPage">
-				<div className="sideBar">
-					<p><a href=""><i className="fa fa-book" aria-hidden="true"></i></a></p>
-					<p><a href=""><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
-				</div>
-				<aside className="userMeals">
-					{this.state.userMeals.map((userMeal) => { 
-						console.log("usermeal",userMeal);
-						console.log("usermeal 1", userMeal.userMeal)
-						return(
-							<div className="eachMeal"> 
-							<h2>My Meal</h2>
-							{userMeal.userMeal.map((userMealItem, i) =>{
-								return(
-							<div className="myDietItem">
-								<h4>{`${userMealItem[1]} from ${userMealItem[0]}`}</h4>
-								<p>{`Calories: ${userMealItem[2]}kcal`} | {`protein: ${userMealItem[5]}g`}</p>
-								<p>{`carbs: ${userMealItem[6]}mg`} | {`fat: ${userMealItem[7]}g`}</p>
-								<p>{`sodium: ${userMealItem[4]}mg`} | {`Sugars: ${userMealItem[3]}g`}</p>
-							</div>
-								)
-							})}
-							</div>
-						)
-					})}
-				</aside>
-			</div> 
-		)
-	}
-}
-
 class App extends React.Component {
-	render(){
-		return(
-			<div className="container">
-				<header>
-					<div>
-						<svg>
-							<g>
-								<path fill="#BF8773" d="M99.369,41c0,4.156-3.343,8-7.468,8H8.1c-4.125,0-7.469-3.844-7.469-8l0,0c0-4.156,3.343-8,7.469-8h83.802
-								C96.026,33,99.369,36.844,99.369,41L99.369,41z"/>
-								<path fill="#BF8773" d="M50.307,53h-0.612H5.231c0,9,4.479,17,8.474,17H49.39h1.222h35.684c3.996,0,8.475-8,8.475-17H50.307z"/>
-								<path fill="#BF8773" d="M50.001,0.777C25.289,0.777,5.255,13,5.255,30c15.685,0,75.996,0,89.491,0
-								C94.746,13,74.712,0.777,50.001,0.777z M19.328,22.972c-1.242,0-2.248-1.006-2.248-2.248c0-1.241,1.006-2.247,2.248-2.247
-								s2.248,1.006,2.248,2.247C21.576,21.966,20.57,22.972,19.328,22.972z M25.583,15.153c-1.241,0-2.248-1.007-2.248-2.248
-								c0-1.242,1.007-2.248,2.248-2.248c1.242,0,2.249,1.006,2.249,2.248C27.831,14.146,26.824,15.153,25.583,15.153z M29.688,23.95
-								c-1.242,0-2.248-1.008-2.248-2.248c0-1.242,1.006-2.249,2.248-2.249c1.241,0,2.247,1.007,2.247,2.249
-								C31.935,22.942,30.929,23.95,29.688,23.95z"/>
-							</g>
-						</svg>
-					</div>
-					<nav>
-						<Link to="/"><i className="fa fa-calculator" aria-hidden="true"></i></Link>
-						<Link to="/user"><i className="fa fa-list" aria-hidden="true"></i></Link>
-					</nav>
-				</header>
-			{this.props.children || <Main />}
-			</div>
-		)
-	}
-}
-
-class Main extends React.Component {
 	constructor(){
 		super();
 		this.state = {
@@ -115,7 +13,6 @@ class Main extends React.Component {
 			itemInfo:["Please select","an item",0,0,0,0,0,0],
 			myDietItems:[],
 			totalCount:["","",0,0,0,0,0,0],
-			userMeals:[]
 		}
 		this.addToDiet = this.addToDiet.bind(this);
 		this.removeFromDiet = this.removeFromDiet.bind(this);
@@ -157,40 +54,6 @@ class Main extends React.Component {
 			totalCount:["","",0,0,0,0,0,0],
 		});
 	}
-	addAll(e){
-		e.preventDefault();
-		const dietState = Array.from(this.state.myDietItems);
-
-		const usersMeal ={
-			userMeal: dietState
-		}
-		this.setState({
-			userMeal: "",
-			myDietMeals:[],
-			totalCount:["","",0,0,0,0,0,0],
-			myDietItems:[]
-		});
-		const dbRef = firebase.database().ref();
-		dbRef.push(usersMeal)
-	}
-	// componentDidMount(){
-	// 	const dbRef = firebase.database().ref();
-
-	// 	dbRef.on("value", (firebaseData) => {
-	// 		console.log("firebasedataval", firebaseData.val());
-	// 		const mealsArray =[];
-	// 		const mealsData= firebaseData.val();
-
-	// 		for(let mealKey in mealsData) {
-	// 			console.log(mealsData[mealKey]);
-	// 			mealsArray.push(mealsData[mealKey])
-	// 		}
-	// 		console.log("mealsarray", mealsArray)
-	// 		this.setState({
-	// 			userMeals: mealsArray
-	// 		})
-	// 	})
-	// }
 	handleChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value
@@ -205,28 +68,27 @@ class Main extends React.Component {
 	}
 	render() {
 		return(
-		<div>
-	{/*}		<header>
-				<div>
-					<svg>
-						<g>
-							<path fill="#BF8773" d="M99.369,41c0,4.156-3.343,8-7.468,8H8.1c-4.125,0-7.469-3.844-7.469-8l0,0c0-4.156,3.343-8,7.469-8h83.802
-							C96.026,33,99.369,36.844,99.369,41L99.369,41z"/>
-							<path fill="#BF8773" d="M50.307,53h-0.612H5.231c0,9,4.479,17,8.474,17H49.39h1.222h35.684c3.996,0,8.475-8,8.475-17H50.307z"/>
-							<path fill="#BF8773" d="M50.001,0.777C25.289,0.777,5.255,13,5.255,30c15.685,0,75.996,0,89.491,0
-							C94.746,13,74.712,0.777,50.001,0.777z M19.328,22.972c-1.242,0-2.248-1.006-2.248-2.248c0-1.241,1.006-2.247,2.248-2.247
-							s2.248,1.006,2.248,2.247C21.576,21.966,20.57,22.972,19.328,22.972z M25.583,15.153c-1.241,0-2.248-1.007-2.248-2.248
-							c0-1.242,1.007-2.248,2.248-2.248c1.242,0,2.249,1.006,2.249,2.248C27.831,14.146,26.824,15.153,25.583,15.153z M29.688,23.95
-							c-1.242,0-2.248-1.008-2.248-2.248c0-1.242,1.006-2.249,2.248-2.249c1.241,0,2.247,1.007,2.247,2.249
-							C31.935,22.942,30.929,23.95,29.688,23.95z"/>
-						</g>
-					</svg>
-				</div>
-				<div>
-					<Link to="/user"><i className="fa fa-list" aria-hidden="true"></i></Link>
-					random red section
-				</div>
-			</header>  */}
+			<div className="container">
+				<header>
+					<div>
+						<svg>
+							<g>
+								<path fill="#BF8773" d="M99.369,41c0,4.156-3.343,8-7.468,8H8.1c-4.125,0-7.469-3.844-7.469-8l0,0c0-4.156,3.343-8,7.469-8h83.802
+								C96.026,33,99.369,36.844,99.369,41L99.369,41z"/>
+								<path fill="#BF8773" d="M50.307,53h-0.612H5.231c0,9,4.479,17,8.474,17H49.39h1.222h35.684c3.996,0,8.475-8,8.475-17H50.307z"/>
+								<path fill="#BF8773" d="M50.001,0.777C25.289,0.777,5.255,13,5.255,30c15.685,0,75.996,0,89.491,0
+								C94.746,13,74.712,0.777,50.001,0.777z M19.328,22.972c-1.242,0-2.248-1.006-2.248-2.248c0-1.241,1.006-2.247,2.248-2.247
+								s2.248,1.006,2.248,2.247C21.576,21.966,20.57,22.972,19.328,22.972z M25.583,15.153c-1.241,0-2.248-1.007-2.248-2.248
+								c0-1.242,1.007-2.248,2.248-2.248c1.242,0,2.249,1.006,2.249,2.248C27.831,14.146,26.824,15.153,25.583,15.153z M29.688,23.95
+								c-1.242,0-2.248-1.008-2.248-2.248c0-1.242,1.006-2.249,2.248-2.249c1.241,0,2.247,1.007,2.247,2.249
+								C31.935,22.942,30.929,23.95,29.688,23.95z"/>
+							</g>
+						</svg>
+					</div>
+					<div>
+						random red section
+					</div>
+				</header>
 				<section>
 					<div className="sideBar">
 						<p><a href=""><i className="fa fa-book" aria-hidden="true"></i></a></p>
@@ -344,40 +206,14 @@ class Main extends React.Component {
 							</div>
 						</div>
 						<button className="myDietClearAll" onClick={(e) => this.clearAll(e)}>Clear All</button>
-						<button className="myDietAddAll" onClick={(e) => this.addAll(e)}>Save to my meals!</button>
 						{this.state.myDietItems ? 
 						<MyDietSection 
 							myDietItemsState={this.state.myDietItems}
 							remove={this.removeFromDiet}
 						/>: ""}
+
 					</article>
 				</main>
-
-	{/*		<User userMeals={this.state.userMeals}/>
-
-				<div>
-					<aside className="userMeals">
-					{this.state.userMeals.map((userMeal) => { 
-						console.log("usermeal",userMeal);
-						console.log("usermeal 1", userMeal.userMeal)
-						return(
-							<div> My Meal
-							{userMeal.userMeal.map((userMealItem, i) =>{
-								return(
-							<div className="myDietItem">
-								<h4>{`${userMealItem[1]} from ${userMealItem[0]}`}</h4>
-								<p>{`Calories: ${userMealItem[2]}kcal`} | {`protein: ${userMealItem[5]}g`}</p>
-								<p>{`carbs: ${userMealItem[6]}mg`} | {`fat: ${userMealItem[7]}g`}</p>
-								<p>{`sodium: ${userMealItem[4]}mg`} | {`Sugars: ${userMealItem[3]}g`}</p>
-							</div>
-								)
-							})}
-							</div>
-						)
-					})}
-					</aside>
-				</div> */}
-			
 			</div>
 		)
 	}
@@ -439,12 +275,13 @@ class MyDietSection extends React.Component{
 		return(
 		<aside className="myDietSection">
 		{this.props.myDietItemsState.map((myDietItem, i) => { 
+			console.log("lalala");
 			return(
 				<div className="myDietItem">
 					<h4>{`${myDietItem[1]} from ${myDietItem[0]}`}</h4>
-					<p>{`Calories: ${myDietItem[2]}kcal`} | {`protein: ${myDietItem[5]}g`}</p>
+					<p>{`Calories: ${myDietItem[2]}kcal`} | {`Sugars: ${myDietItem[3]}g`}</p>
+					<p>{`sodium: ${myDietItem[4]}mg`} | {`protein: ${myDietItem[5]}g`}</p>
 					<p>{`carbs: ${myDietItem[6]}mg`} | {`fat: ${myDietItem[7]}g`}</p>
-					<p>{`sodium: ${myDietItem[4]}mg`} | {`Sugars: ${myDietItem[3]}g`}</p>
 					<DietItem key={i} myDietItem={myDietItem} remove={this.props.remove} dietIndex={i} />
 				</div>
 			)
@@ -453,8 +290,6 @@ class MyDietSection extends React.Component{
 		)
 	}
 }
-
-//////////////////////////////////////////////////////////////////////////////////
 
 class CalculateNutrients extends React.Component {
 	constructor(){
@@ -558,8 +393,6 @@ class CalculateNutrients extends React.Component {
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////////////
-
 const NutrientsToAdd = function(props){
 	let calculatedCalories = props.caloriesNeeded - props.calories
 	let calculatedProteins = props.proteinNeeded - props.proteins
@@ -567,49 +400,12 @@ const NutrientsToAdd = function(props){
 	let calulatedFat = props.fatNeeded - props.fats
 	let calculatedSodium = 2300 - props.sodium
 	let calculatedSugars = 40-props.sugars
-	let calorieColor = ""
-	let proteinColor = ""
-	let carbColor = ""
-	let fatColor = ""
-	let sodiumColor = ""
-	let sugarColor = ""
-
+	let numberColor = ""
 	if(calculatedCalories >= 0){
-		calorieColor += "positive"
+		numberColor += "positive"
 	} else {
-		calorieColor += "negative"
+		numberColor += "negative"
 	};
-
-	if(calculatedProteins >= 0){
-		proteinColor += "positive"
-	} else {
-		proteinColor += "negative"
-	};
-
-	if(calculatedCarbs >= 0){
-		carbColor += "positive"
-	} else {
-		carbColor += "negative"
-	};
-
-	if(calulatedFat >= 0){
-		fatColor += "positive"
-	} else {
-		fatColor += "negative"
-	};
-
-	if(calculatedSodium >= 0){
-		sodiumColor += "positive"
-	} else {
-		sodiumColor += "negative"
-	};
-
-	if(calculatedSugars >= 0){
-		sugarColor += "positive"
-	} else {
-		sugarColor += "negative"
-	};
-
 	return(
 		<div>
 			<div>
@@ -619,20 +415,13 @@ const NutrientsToAdd = function(props){
 			</div>
 			<div className="nutrientsToAdd">
 				<h3>Nutrients to add to your diet</h3>
-				<p>Calories: <span className={calorieColor}>{`${calculatedCalories || 0}`}</span>kcal | Proteins: <span className={proteinColor}>{`${calculatedProteins || 0}`}</span>g</p>
-				<p>Carbs: <span className={carbColor}>{`${calculatedCarbs || 0}`}</span>g | Fats: <span className={fatColor}>{`${calulatedFat || 0}`}</span>g</p>
-				<p>Sodium: <span className={sodiumColor}>{`${calculatedSodium || 0}`}</span>mg | Sugars: <span className={sugarColor}>{`${calculatedSugars || 0}`}</span>g</p>
+				<p>Calories: <span className={numberColor}>{`${calculatedCalories || 0}`}</span>kcal | Proteins: <span className={numberColor}>{`${calculatedProteins || 0}`}</span>g</p>
+				<p>Carbs: <span className={numberColor}>{`${calculatedCarbs || 0}`}</span>g | Fats: <span className={numberColor}>{`${calulatedFat || 0}`}</span>g</p>
+				<p>Sodium: <span className={numberColor}>{`${calculatedSodium || 0}`}</span>mg | Sugars: <span className={numberColor}>{`${calculatedSugars || 0}`}</span>g</p>
 			</div>
 		</div>
 	)
 }
 
 
-
-
-ReactDOM.render(
-<Router history={browserHistory}>
-	<Route path="/" component={App}>
-		<Route path="/user" component={User}/>
-	</Route>
-</Router>, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById("app"));

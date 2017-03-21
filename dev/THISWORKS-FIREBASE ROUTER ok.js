@@ -42,70 +42,36 @@ class User extends React.Component{
 		})
 	}
 	render(){
+		console.log("this.props.usermeal", this.props.userMeals);
 		return (
-			<div className="userPage">
-				<div className="sideBar">
-					<p><a href=""><i className="fa fa-book" aria-hidden="true"></i></a></p>
-					<p><a href=""><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
-				</div>
-				<aside className="userMeals">
-					{this.state.userMeals.map((userMeal) => { 
-						console.log("usermeal",userMeal);
-						console.log("usermeal 1", userMeal.userMeal)
-						return(
-							<div className="eachMeal"> 
-							<h2>My Meal</h2>
-							{userMeal.userMeal.map((userMealItem, i) =>{
-								return(
-							<div className="myDietItem">
-								<h4>{`${userMealItem[1]} from ${userMealItem[0]}`}</h4>
-								<p>{`Calories: ${userMealItem[2]}kcal`} | {`protein: ${userMealItem[5]}g`}</p>
-								<p>{`carbs: ${userMealItem[6]}mg`} | {`fat: ${userMealItem[7]}g`}</p>
-								<p>{`sodium: ${userMealItem[4]}mg`} | {`Sugars: ${userMealItem[3]}g`}</p>
-							</div>
-								)
-							})}
-							</div>
-						)
-					})}
+			<div>
+			<aside className="userMeals">
+				{this.state.userMeals.map((userMeal) => { 
+					console.log("usermeal",userMeal);
+					console.log("usermeal 1", userMeal.userMeal)
+					return(
+						<div> My Meal
+						{userMeal.userMeal.map((userMealItem, i) =>{
+							return(
+						<div className="myDietItem">
+							<h4>{`${userMealItem[1]} from ${userMealItem[0]}`}</h4>
+							<p>{`Calories: ${userMealItem[2]}kcal`} | {`protein: ${userMealItem[5]}g`}</p>
+							<p>{`carbs: ${userMealItem[6]}mg`} | {`fat: ${userMealItem[7]}g`}</p>
+							<p>{`sodium: ${userMealItem[4]}mg`} | {`Sugars: ${userMealItem[3]}g`}</p>
+						</div>
+							)
+						})}
+						</div>
+					)
+				})}
 				</aside>
 			</div> 
 		)
 	}
 }
 
-class App extends React.Component {
-	render(){
-		return(
-			<div className="container">
-				<header>
-					<div>
-						<svg>
-							<g>
-								<path fill="#BF8773" d="M99.369,41c0,4.156-3.343,8-7.468,8H8.1c-4.125,0-7.469-3.844-7.469-8l0,0c0-4.156,3.343-8,7.469-8h83.802
-								C96.026,33,99.369,36.844,99.369,41L99.369,41z"/>
-								<path fill="#BF8773" d="M50.307,53h-0.612H5.231c0,9,4.479,17,8.474,17H49.39h1.222h35.684c3.996,0,8.475-8,8.475-17H50.307z"/>
-								<path fill="#BF8773" d="M50.001,0.777C25.289,0.777,5.255,13,5.255,30c15.685,0,75.996,0,89.491,0
-								C94.746,13,74.712,0.777,50.001,0.777z M19.328,22.972c-1.242,0-2.248-1.006-2.248-2.248c0-1.241,1.006-2.247,2.248-2.247
-								s2.248,1.006,2.248,2.247C21.576,21.966,20.57,22.972,19.328,22.972z M25.583,15.153c-1.241,0-2.248-1.007-2.248-2.248
-								c0-1.242,1.007-2.248,2.248-2.248c1.242,0,2.249,1.006,2.249,2.248C27.831,14.146,26.824,15.153,25.583,15.153z M29.688,23.95
-								c-1.242,0-2.248-1.008-2.248-2.248c0-1.242,1.006-2.249,2.248-2.249c1.241,0,2.247,1.007,2.247,2.249
-								C31.935,22.942,30.929,23.95,29.688,23.95z"/>
-							</g>
-						</svg>
-					</div>
-					<nav>
-						<Link to="/"><i className="fa fa-calculator" aria-hidden="true"></i></Link>
-						<Link to="/user"><i className="fa fa-list" aria-hidden="true"></i></Link>
-					</nav>
-				</header>
-			{this.props.children || <Main />}
-			</div>
-		)
-	}
-}
 
-class Main extends React.Component {
+class App extends React.Component {
 	constructor(){
 		super();
 		this.state = {
@@ -167,8 +133,7 @@ class Main extends React.Component {
 		this.setState({
 			userMeal: "",
 			myDietMeals:[],
-			totalCount:["","",0,0,0,0,0,0],
-			myDietItems:[]
+			totalCount:["","",0,0,0,0,0,0]
 		});
 		const dbRef = firebase.database().ref();
 		dbRef.push(usersMeal)
@@ -205,8 +170,8 @@ class Main extends React.Component {
 	}
 	render() {
 		return(
-		<div>
-	{/*}		<header>
+		<div className="container">
+			<header>
 				<div>
 					<svg>
 						<g>
@@ -226,7 +191,7 @@ class Main extends React.Component {
 					<Link to="/user"><i className="fa fa-list" aria-hidden="true"></i></Link>
 					random red section
 				</div>
-			</header>  */}
+			</header>
 				<section>
 					<div className="sideBar">
 						<p><a href=""><i className="fa fa-book" aria-hidden="true"></i></a></p>
@@ -377,7 +342,7 @@ class Main extends React.Component {
 					})}
 					</aside>
 				</div> */}
-			
+			{this.props.children}
 			</div>
 		)
 	}

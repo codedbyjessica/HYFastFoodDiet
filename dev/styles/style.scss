@@ -63,9 +63,23 @@ header{
 			padding: 10px 20px;
 		}
 	}
-	div:nth-child(2){
-		width: 31.3%;
-		background-color: $highlightColor;
+}
+
+nav{
+	display: flex;
+	justify-content: center;
+	align-items:center;
+	width: 31.3%;
+	background-color: $highlightColor;
+}
+
+nav .fa{
+	color: $primaryColorLight;
+	text-decoration: none;
+	padding: 20px;
+	font-size: 20px;
+	&:hover{
+		color: $lightColor;
 	}
 }
 
@@ -318,11 +332,12 @@ main{
 }
 
 
-.myDietClearAll{
+.myDietClearAll, .myDietAddAll{
 	margin-bottom: 10px;
 }
 
 .myDietItem{
+	text-align: center;
 	background-color: white;
 	margin: 0 20px 10px 20px;
 	padding: 10px;			
@@ -337,4 +352,21 @@ main{
 		padding: 0;
 		margin: 0;
 	}
+}
+
+.userPage{
+	display:flex;
+}
+
+.userMeals{
+	padding: 10px;
+	display:flex;
+	flex-wrap:wrap;
+	h2{
+		text-align: center;
+	}
+}
+
+.eachMeal{
+	width: 33.3%;
 }
