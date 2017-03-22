@@ -1,0 +1,84 @@
+@import "partials/norm";
+@import "partials/variables";
+@import "partials/header";
+@import "partials/sidebar";
+@import "partials/search";
+@import "partials/myinfo";
+@import "partials/results";
+@import "partials/mydiet";
+@import "partials/userpage";
+
+
+//////////////////////////////////////////////////////////// G L O B A L GLOBAL GLOBAL
+a:hover, button:hover, p:hover{
+	transition: all 0.5s ease;
+}
+
+h1, h2, h3, h4, h5 {
+	margin: 0;
+}
+
+h1{
+	padding: 10px 15px;
+	text-transform: uppercase;
+	font-size: 24px;
+}
+
+h2{
+	margin-bottom: 10px;
+}
+
+p{
+	margin: 8px 0;
+}
+
+a{
+	color: $lightColor;
+	text-decoration: none;
+	&:hover{
+		color: #primaryColorLight;
+	}
+}
+
+body{
+	background-color: $mediumColor;
+	font-family: 'Roboto', sans-serif;
+	font-size: 12px;
+	color:$darkColor;
+	overflow-y: scroll;
+}
+
+.container{
+	width: 95%;
+	margin: 0 auto;
+	background-color: $mediumColor;
+	-webkit-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5);
+	-moz-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5);
+	box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5);
+}
+
+section{
+	display:flex;
+}
+
+.box > div{
+	padding: 20px;
+}
+
+button {
+	background-color: $highlightColor;
+	color: $lightColor;
+	padding: 5px 10px;
+	border: 1px solid $darkColor;
+}
+
+button:hover {
+	background-color: $lightColor;
+	color: $darkColor;
+}
+
+
+//////////////////////////////////////////////////////////// R E S O U R C E S  RESOURCES
+.resources{
+	margin: 40px;
+}

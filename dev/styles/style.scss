@@ -7,6 +7,8 @@ $lightColor: #F2F2F2;
 $mediumColor: #999;
 $darkColor: #333;
 
+
+//////////////////////////////////////////////////////////// G L O B A L GLOBAL GLOBAL
 a:hover, button:hover, p:hover{
 	transition: all 0.5s ease;
 }
@@ -29,11 +31,20 @@ p{
 	margin: 8px 0;
 }
 
+a{
+	color: $lightColor;
+	text-decoration: none;
+	&:hover{
+		color: #primaryColorLight;
+	}
+}
+
 body{
 	background-color: $mediumColor;
 	font-family: 'Roboto', sans-serif;
 	font-size: 12px;
 	color:$darkColor;
+	overflow-y: scroll;
 }
 
 .container{
@@ -53,23 +64,41 @@ section{
 	padding: 20px;
 }
 
+button {
+	background-color: $highlightColor;
+	color: $lightColor;
+	padding: 5px 10px;
+	border: 1px solid $darkColor;
+}
+
+button:hover {
+	background-color: $lightColor;
+	color: $darkColor;
+}
+
+//////////////////////////////////////////////////////////// H E A D E R HEADER HEADER
 header{
 	// height: 100px;
 	display: flex;
-	div:first-child{
-		width: 68.6%;
-		background-color: $primaryColorLight;
-		svg{
-			padding: 10px 20px;
-		}
+}
+
+.logo{
+	display: flex;
+	align-items: center;
+	width: 68.6%;
+	background-color: $primaryColorLight;
+	svg{
+		width: 110px;
+		height: 80px;
+		margin: 40px;
 	}
 }
 
 .mainNav{
 	display: flex;
-	justify-content: center;
-	align-items:center;
-	flex-direction: column;
+	justify-content: space-between;
+	// align-items:center;
+	// flex-direction: column;
 	width: 31.3%;
 	background-color: $highlightColor;
 }
@@ -78,6 +107,7 @@ nav{
 	display: flex;
 	justify-content: center;
 	align-items:center;
+	flex-direction: column;
 }
 
 nav .fa{
@@ -89,6 +119,54 @@ nav .fa{
 		color: $lightColor;
 	}
 }
+
+//auth stuff
+.loginOptions{
+	text-align: right;
+	input{
+		margin: 2px 0;
+	}
+	button{
+		margin: 3px;
+		outline:none;
+	}
+}
+
+.displayNone{
+	display:none;
+}
+
+.displayBlock{
+	display: block;
+}
+
+.loginForms{
+	text-align:right;
+	padding: 10px;
+	margin: 5px;
+	background-color: $primaryColorLight;
+	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	h3{
+		margin-bottom: 5px;
+	}
+}
+
+.hello{
+	text-align:center;
+	padding: 10px;
+	margin: 15px;
+	background-color: $primaryColorLight;
+	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	h3{
+		margin-bottom: 5px;
+	}
+}
+
+//////////////////////////////////////////////////////////// S I D E B A R SIDEBAR SIDEBAR
 
 .sideBar{
 	text-align: center;
@@ -124,46 +202,8 @@ nav .fa{
 	}
 }
 
-.myInfo{
-	text-align:center;
-	order: 1;
-	width: 31.3%;
-	background-color: $primaryColorDark;
-	// div{
-	// 	margin: 8px 0;
-	// }
-	h1{
-		background-color: $lightColor;
-	}
-	span{
-		font-weight: bold;
-		padding-right: 3px;
-	}
-}
 
-.positive{
-	color: #269328;
-}
-
-.negative{
-	color: red;
-}
-
-.myInfoTop{
-	padding-top: 20px;
-}
-
-.nutrientsToAdd{
-	background-color: $lightColor;
-	display: block;
-	margin: 0 auto;
-	width: 70%;
-	padding: 8px 15px;
-	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-
-}
+//////////////////////////////////////////////////////////// S E A R C H SEARCH SEARCH
 
 .searchFormDiv{
 	width: 62.6%;
@@ -239,6 +279,27 @@ nav .fa{
 	width: 16%;
 }
 
+
+
+//////////////////////////////////////////////////////////// M Y  I N F O   MY INFO MY INFO
+
+.myInfo{
+	text-align:center;
+	order: 1;
+	width: 31.3%;
+	background-color: $primaryColorDark;
+	// div{
+	// 	margin: 8px 0;
+	// }
+	h1{
+		background-color: $lightColor;
+	}
+	span{
+		font-weight: bold;
+		padding-right: 3px;
+	}
+}
+
 .myInfoForm div{
 	input[type="radio"] {
 		display:none;
@@ -265,9 +326,6 @@ nav .fa{
 	input[type="text"]{
 		border: 1px solid $darkColor;
 	}
-	button{
-		margin: 5px;
-	}
 }
 
 .numberInput{
@@ -277,22 +335,43 @@ nav .fa{
 	border: none;
 }
 
+.positive{
+	color: #269328;
+}
+
+.negative{
+	color: red;
+}
+
+.myInfoTop{
+	padding-top: 20px;
+}
+
+.nutrientsToAdd{
+	background-color: $lightColor;
+	display: block;
+	margin: 0 auto;
+	width: 70%;
+	padding: 8px 15px;
+	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+
+}
+
 input[type="text"].numberInput, textarea {
 	background-color : $lightColor;
 }
 
-button {
-	background-color: $highlightColor;
-	color: $lightColor;
-	padding: 5px 10px;
-	border: 1px solid $darkColor;
-}
 
-button:hover {
+
+#buttonOn {
 	background-color: $lightColor;
 	color: $darkColor;
+	cursor: default;
 }
 
+//////////////////////////////////////////////////////////// R E S U L T S  RESULTS RESULTS
 main{
 	display:flex;
 	.itemsList{
@@ -322,6 +401,9 @@ main{
 			-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 			box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 		}
+		button{
+			margin: 5px;
+		}
 	}
 }
 
@@ -338,6 +420,7 @@ main{
 	}
 }
 
+//////////////////////////////////////////////////////////// M Y  D I E T  MY DIET MY DIET
 
 .myDietClearAll, .myDietAddAll{
 	margin-bottom: 10px;
@@ -361,11 +444,18 @@ main{
 	}
 }
 
-.userPage{
+
+///////////////////////////////////////////////////////////// U S E R P A G E USERPAGE USERPAGE
+.userPage, .resourcesPage{
 	display:flex;
+	h1{
+		background-color: $lightColor;
+		margin: -10px;
+		margin-bottom: 10px;
+	}
 }
 
-.mealsContent{
+.mealsContent, .resourcesContent{
 	width: 94%;
 	padding: 10px;
 	text-align: center;
@@ -405,8 +495,146 @@ main{
 	}
 }
 
-.loginOptions{
+
+
+//////////////////////////////////////////////////////////// R E S O U R C E S  RESOURCES
+
+.resources{
+	margin: 40px;
+}
+
+
+//////////////////////////////////////////////////////////// F O O T E R FOOTER FOOTER
+
+footer{
+	display:none;
+	background-color: $darkColor;
+	padding: 10px 0;
+	text-align: center;
+	color: $primaryColorLight;
+	p{
+		display:inline;
+		.fa{
+			padding: 0 10px;
+			color: $primaryColorDark;
+			text-decoration: none;
+			font-size: 20px;
+			margin-bottom: 10px;
+			&:hover{
+				color: $lightColor;
+			}
+		}
+	}
 	a{
-		padding: 10px;
+		color: $primaryColorDark;
+		text-decoration: none;
+		&:hover{
+			color: $lightColor;
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////// M E D I A Q U E R I E S mediaqueriesss
+@media (min-width: 1300px) {
+	.container{
+		width: 1300px;
+	}
+}
+
+@media (max-width: 1050px) {
+	.container{
+		width: 95%;
+	}
+
+	section{
+		flex-direction: column
+	}
+
+	.myInfo{
+		width: 100%;
+		order: 0;
+		padding-bottom: 20px;
+	}
+
+	.searchFormDiv, .resourcesContent, .mealsContent{
+		width: 100%;
+	}
+
+	.searchFormDiv{
+		h1{
+			background-color: $primaryColorLight;
+			text-align: center;
+		}
+	}
+
+	footer{
+		display:block;
+	}
+
+	.sideBar{
+		display:none;
+	}
+
+	.itemList, .itemInfoCard, .myDiet{
+		width: 33.3%;
+	}
+
+	main{
+		.itemsList{
+			width: 33.3%;
+		}
+		.itemInfoCard{
+			width: 33.3%;
+		}
+		.myDiet{
+			width: 33.3%;
+		}
+	}
+}
+
+@media (max-width: 850px) {
+	header{
+		flex-direction: column;
+	}
+	.logo{
+		width: 100%;
+		svg{
+			width: 110px;
+			height: 80px;
+			margin: 40px;
+		}
+	}
+
+	.mainNav{
+		width: 100%;
+	}
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 660px) {
+	main{
+		flex-direction: column;
+		.itemsList{
+			width: 100%;
+		}
+		.itemInfoCard{
+			width: 100%;
+		}
+		.myDiet{
+			width: 100%;
+		}
+	}
+}
+
+.box div.itemAdd{
+	padding-top: 0;
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+
+	.foodsBrand {
+
+		width: 25%;
 	}
 }

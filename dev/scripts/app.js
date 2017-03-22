@@ -56,11 +56,11 @@ class User extends React.Component{
 		return (
 			<div className="userPage">
 				<div className="sideBar">
-					<p><a href=""><i className="fa fa-book" aria-hidden="true"></i></a></p>
-					<p><a href=""><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
+					<p><Link to="/resources"><i className="fa fa-book" aria-hidden="true"></i></Link></p>
+					<p><a href="https://twitter.com/intent/tweet?text=Plan%20your%20fast%20food%20meals%20with%20health%20in%20mind!%20http://codedbyjessica.com/fastfooddiet%20developed%20by%20@codedbyjessica" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
 				</div>
 				<aside className="mealsContent">
-					<h2>My Saved Meals</h2>
+					<h1>My Saved Meals</h1>
 					<div className="userMeals">
 					{this.state.userMeals.map((userMeal) => { 
 						console.log("usermeal",userMeal.key);
@@ -94,8 +94,8 @@ class App extends React.Component {
 		return(
 			<div className="container">
 				<header>
-					<div>
-						<svg>
+					<div className="logo">
+						<Link to="/"><svg>
 							<g>
 								<path fill="#BF8773" d="M99.369,41c0,4.156-3.343,8-7.468,8H8.1c-4.125,0-7.469-3.844-7.469-8l0,0c0-4.156,3.343-8,7.469-8h83.802
 								C96.026,33,99.369,36.844,99.369,41L99.369,41z"/>
@@ -107,7 +107,7 @@ class App extends React.Component {
 								c-1.242,0-2.248-1.008-2.248-2.248c0-1.242,1.006-2.249,2.248-2.249c1.241,0,2.247,1.007,2.247,2.249
 								C31.935,22.942,30.929,23.95,29.688,23.95z"/>
 							</g>
-						</svg>
+						</svg></Link>
 					</div>
 					<div className="mainNav">
 						<nav>
@@ -118,6 +118,7 @@ class App extends React.Component {
 					</div>
 				</header>
 			{this.props.children || <Main />}
+			<Footer />
 			</div>
 		)
 	}
@@ -127,7 +128,7 @@ class Auth extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			formToShow: '',
+			formToShow: 'hello',
 			email: '',
 			password: '',
 			confirm: ''
@@ -158,32 +159,42 @@ class Auth extends React.Component {
 		if(this.state.password=this.state.confirm){
 			firebase.auth()
 				.createUserWithEmailAndPassword(this.state.email, this.state.password)
-				.then((userData) => {
-					console.log("userData")
-					console.log(this.state.email)
-					this.setState({
-						formToShow: "hello"
-					});
-				});
+			.catch((error) => {
+					var errorCode = error.code;
+						var errorMessage = error.message;
+						alert(errorMessage);
+						console.log(error);
+				})
+				// .then((userData) => {
+				// 	console.log("userData")
+				// 	console.log(this.state.email)
+				// 	this.setState({
+				// 		formToShow: "hello"
+				// 	});
+				// });
 		}
 	}
 	login(e) {
 		e.preventDefault();
 		firebase.auth()
 			.signInWithEmailAndPassword(this.state.email, this.state.password)
-			.then((userData) =>{ 
-				alert("Welcome", this.state.email)
-					this.setState({
-						formToShow: "hello"
-					});
-			})
+			.catch((error) => {
+					var errorCode = error.code;
+						var errorMessage = error.message;
+						alert(errorMessage);
+						console.log(error);
+				})
+
+			// .then((userData) =>{ 
+			// 	alert("Welcome", this.state.email)
+			// })
 	}
 	signout(e){
 		e.preventDefault();
-		firebase.auth().signOut().then(() => {
+		firebase.auth()
+			.signOut()
+			.then(() => {
 			alert("Successfully signed out")
-		}, function(error) {
-			console.error('Sign Out Error', error);
 		});
 		location.reload();
 	}
@@ -202,7 +213,7 @@ class Auth extends React.Component {
 							<input type="password" name="password" onChange={this.handleChange} />
 						</div>
 						<div>
-							<label htmlFor="confirm">Confirm Password:</label>
+							<label htmlFor="confirm">Confirm: </label>
 							<input type="password" name="confirm" onChange={this.handleChange} />
 						</div>
 						<button>Sign In</button>
@@ -227,19 +238,48 @@ class Auth extends React.Component {
 				</div>
 			);
 		}
-		else if(this.state.formToShow === "hello"){
+		else if(this.state.formToShow === "hello") {
 			loginForm = (
-				<div className="loginForms">
-					<span> Welcome! {this.state.email}</span>
-					<a href="" className="signout" onClick={this.signout}>Log Out</a>
+				<div className="hello">
+					<h3> Log in or sign up to customize your own fast food diet!</h3>
 				</div>
 			);
 		}
+		//hide login/logout buttons depending on user
+		let login = ""
+		let logout = ""
+		if(firebase.auth().currentUser !== null){
+			logout += "displayBlock"
+		} else {
+			logout += "displayNone"
+		};
+		if(firebase.auth().currentUser !== null){
+			login += "displayNone"
+		} else {
+			login += "displayBlock"
+		};
+		//make buttons dead/become the headings
+		let signupid=""
+		let loginid=""
+		if(this.state.formToShow === 'signup'){
+			signupid += "buttonOn"
+		} else {
+			signupid += ""
+		};
+		if(this.state.formToShow === 'login'){
+			loginid += "buttonOn"
+		} else {
+			loginid += ""
+		};
 		return (
 			<div className="loginOptions">
-				<a href="" className="signup" onClick={this.formToShow}>Sign Up</a>
-				<a href="" className="login" onClick={this.formToShow}>Log In</a>
-				<a href="" className="signout" onClick={this.signout}>Log Out</a>
+				<div className={login}>
+					<button className="signup" id={signupid} onClick={this.formToShow}>Sign Up</button>
+					<button className="login" id={loginid} onClick={this.formToShow}>Log In</button>
+				</div>
+				<div className={logout}>
+					Welcome! <button className="signout" onClick={this.signout}>Log Out</button>
+				</div>
 				<div>
 				{loginForm}
 				</div>
@@ -316,9 +356,6 @@ class Main extends React.Component {
 		const userId = firebase.auth().currentUser.uid
 		const dbRef = firebase.database().ref(userId)
 		dbRef.push(usersMeal)
-
-
-
 	}
 
 	handleChange(e) {
@@ -338,8 +375,8 @@ class Main extends React.Component {
 		<div>
 				<section>
 					<div className="sideBar">
-						<p><a href=""><i className="fa fa-book" aria-hidden="true"></i></a></p>
-						<p><a href=""><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
+						<p><Link to="/resources"><i className="fa fa-book" aria-hidden="true"></i></Link></p>
+						<p><a href="https://twitter.com/intent/tweet?text=Plan%20your%20fast%20food%20meals%20with%20health%20in%20mind!%20http://codedbyjessica.com/fastfooddiet%20developed%20by%20@codedbyjessica" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
 					</div>
 					<CalculateNutrients 
 						calories={this.state.totalCount[2]} 
@@ -643,7 +680,7 @@ class CalculateNutrients extends React.Component {
 
 //////////////////////////////////////////////////////////////////////////////////
 
-const NutrientsToAdd = function(props){
+const NutrientsToAdd = (props) => {
 	let calculatedCalories = props.caloriesNeeded - props.calories
 	let calculatedProteins = props.proteinNeeded - props.proteins
 	let calculatedCarbs = props.carbsNeeded - props.carbs
@@ -710,9 +747,40 @@ const NutrientsToAdd = function(props){
 	)
 }
 
+const Resources = () => {
+	return(
+		<div className="resourcesPage">
+				<div className="sideBar">
+					<p><Link to="/resources"><i className="fa fa-book" aria-hidden="true"></i></Link></p>
+					<p><a href="https://twitter.com/intent/tweet?text=Plan%20your%20fast%20food%20meals%20with%20health%20in%20mind!%20http://codedbyjessica.com/fastfooddiet%20developed%20by%20@codedbyjessica" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
+				</div>
+				<aside className="resourcesContent">
+					<h1>Resources</h1>
+					<div className="resources">
+						<p><a href="https://www.k-state.edu/paccats/Contents/Nutrition/PDF/Needs.pdf">https://www.k-state.edu/paccats/Contents/Nutrition/PDF/Needs.pdf</a></p>
+						<p><a href="https://authoritynutrition.com/how-much-sugar-per-day/">https://authoritynutrition.com/how-much-sugar-per-day/</a></p>
+						<p><a href="http://www.hc-sc.gc.ca/fn-an/nutrition/sodium/index-eng.php">http://www.hc-sc.gc.ca/fn-an/nutrition/sodium/index-eng.php/</a></p>
+					</div>
+				</aside>
+			</div> 
+	)
+}
+
+const Footer = () => {
+	return(
+					<footer>
+						<p><Link to="/resources"><i className="fa fa-book" aria-hidden="true"></i></Link></p>
+						<p><a href="https://twitter.com/intent/tweet?text=Plan%20your%20fast%20food%20meals%20with%20health%20in%20mind!%20http://codedbyjessica.com/fastfooddiet%20developed%20by%20@codedbyjessica" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
+						<div>&copy; 2017 <a href="http://codedbyjessica.com/" target="_blank">Coded By Jessica</a> | Powered by <a href="https://www.nutritionix.com/business/api" target="_blank">Nutritionix API</a></div>
+						<div><a href="#top">Back To Top</a></div>
+					</footer>
+	)
+}
+
 ReactDOM.render(
 <Router history={browserHistory}>
 	<Route path="/" component={App}>
 		<Route path="/user" component={User}/>
+		<Route path="/resources" component={Resources}/>
 	</Route>
 </Router>, document.getElementById('app'));
