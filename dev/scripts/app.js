@@ -544,12 +544,12 @@ const Resources = () => {
 
 const Footer = () => {
 	return(
-					<footer>
-						<p><Link to="/resources"><i className="fa fa-book" aria-hidden="true"></i></Link></p>
-						<p><a href="https://twitter.com/intent/tweet?text=Plan%20your%20fast%20food%20meals%20with%20health%20in%20mind!%20http://codedbyjessica.com/fastfooddiet%20developed%20by%20@codedbyjessica" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
-						<div>&copy; 2017 <a href="http://codedbyjessica.com/" target="_blank">Coded By Jessica</a> | Powered by <a href="https://www.nutritionix.com/business/api" target="_blank">Nutritionix API</a></div>
-						<div><a href="#top">Back To Top</a></div>
-					</footer>
+		<footer>
+			<p><Link to="/resources"><i className="fa fa-book" aria-hidden="true"></i></Link></p>
+			<p><a href="https://twitter.com/intent/tweet?text=Plan%20your%20fast%20food%20meals%20with%20health%20in%20mind!%20http://codedbyjessica.com/fastfooddiet%20developed%20by%20@codedbyjessica" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
+			<div>&copy; 2017 <a href="http://codedbyjessica.com/" target="_blank">Coded By Jessica</a> | Powered by <a href="https://www.nutritionix.com/business/api" target="_blank">Nutritionix API</a></div>
+			<div><a href="#top">Back To Top</a></div>
+		</footer>
 	)
 }
 
