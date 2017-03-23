@@ -2,7 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Router, Route, browserHistory, Link } from 'react-router';
 import { ajax } from "jquery";
-import DietItem from "./dietItem";
+import DietItem from "./components/dietItem";
+import User from "./components/user";
+import Auth from "./components/auth";
 
 const config = {
 	apiKey: "AIzaSyCut2SB5QB85C97vjnzaAG1pPJeDssUzfA",
@@ -13,101 +15,16 @@ const config = {
 };
 firebase.initializeApp(config);
 
-//////////////////////////////////////userMeals={this.state.userMeals}///////////////////////////PASS THIS PROP SOMEWHERE!!!
-
-class User extends React.Component{
-	constructor(){
-		super();
-		this.state = {
-			userMeals:[]
-		}
-	}
-	componentDidMount(){
-		firebase.auth().onAuthStateChanged((user) => {
-			if(user){
-
-				const userId = firebase.auth().currentUser.uid
-
-				const dbRef = firebase.database().ref(userId)
-				dbRef.on("value", (firebaseData) => {
-					console.log("firebasedataval", firebaseData.val());
-					const mealsArray =[];
-					const mealsData= firebaseData.val();
-
-					for(let mealKey in mealsData) {
-						mealsData[mealKey].key = mealKey
-					console.log("mealkey", mealsData[mealKey].key);
-						mealsArray.push(mealsData[mealKey])
-					}
-					console.log("mealsarray", mealsArray)
-					this.setState({
-						userMeals: mealsArray
-					})
-				})
-			}
-		})
-	}
-	removeMeal(mealToRemove){
-		console.log("meal to remove", mealToRemove);
-		const dbRef = firebase.database().ref(firebase.auth().currentUser.uid + "/" + mealToRemove);
-		dbRef.remove();
-	}
-	render(){
-		return (
-			<div className="userPage">
-				<div className="sideBar">
-					<p><Link to="/resources"><i className="fa fa-book" aria-hidden="true"></i></Link></p>
-					<p><a href="https://twitter.com/intent/tweet?text=Plan%20your%20fast%20food%20meals%20with%20health%20in%20mind!%20http://codedbyjessica.com/fastfooddiet%20developed%20by%20@codedbyjessica" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
-				</div>
-				<aside className="mealsContent">
-					<h1>My Saved Meals</h1>
-					<div className="userMeals">
-					{this.state.userMeals.map((userMeal) => { 
-						console.log("usermeal",userMeal.key);
-						console.log("usermeal 1", userMeal.userMeal)
-						return(
-							<div className="eachMeal" key={userMeal.key}> 
-								<h2>My Meal</h2>
-								<button onClick={() => this.removeMeal(userMeal.key)}>Remove Meal</button>
-								{userMeal.userMeal.map((userMealItem, i) =>{
-									return(
-									<div className="myDietItem" key={i}>
-										<h4>{`${userMealItem[1]} from ${userMealItem[0]}`}</h4>
-										<p>{`Calories: ${userMealItem[2]}kcal`} | {`protein: ${userMealItem[5]}g`}</p>
-										<p>{`carbs: ${userMealItem[6]}mg`} | {`fat: ${userMealItem[7]}g`}</p>
-										<p>{`sodium: ${userMealItem[4]}mg`} | {`Sugars: ${userMealItem[3]}g`}</p>
-									</div>
-									)
-								})}
-							</div>
-						)
-					})}
-					</div>
-				</aside>
-			</div> 
-		)
-	}
-}
 
 class App extends React.Component {
 	render(){
 		return(
 			<div className="container">
 				<header>
-					<div className="logo">
-						<Link to="/"><svg>
-							<g>
-								<path fill="#BF8773" d="M99.369,41c0,4.156-3.343,8-7.468,8H8.1c-4.125,0-7.469-3.844-7.469-8l0,0c0-4.156,3.343-8,7.469-8h83.802
-								C96.026,33,99.369,36.844,99.369,41L99.369,41z"/>
-								<path fill="#BF8773" d="M50.307,53h-0.612H5.231c0,9,4.479,17,8.474,17H49.39h1.222h35.684c3.996,0,8.475-8,8.475-17H50.307z"/>
-								<path fill="#BF8773" d="M50.001,0.777C25.289,0.777,5.255,13,5.255,30c15.685,0,75.996,0,89.491,0
-								C94.746,13,74.712,0.777,50.001,0.777z M19.328,22.972c-1.242,0-2.248-1.006-2.248-2.248c0-1.241,1.006-2.247,2.248-2.247
-								s2.248,1.006,2.248,2.247C21.576,21.966,20.57,22.972,19.328,22.972z M25.583,15.153c-1.241,0-2.248-1.007-2.248-2.248
-								c0-1.242,1.007-2.248,2.248-2.248c1.242,0,2.249,1.006,2.249,2.248C27.831,14.146,26.824,15.153,25.583,15.153z M29.688,23.95
-								c-1.242,0-2.248-1.008-2.248-2.248c0-1.242,1.006-2.249,2.248-2.249c1.241,0,2.247,1.007,2.247,2.249
-								C31.935,22.942,30.929,23.95,29.688,23.95z"/>
-							</g>
-						</svg></Link>
+					<div className="logo" id="top">
+						<Link to="/">
+							<img src="logo.png" alt="logo" />
+						</Link>
 					</div>
 					<div className="mainNav">
 						<nav>
@@ -124,170 +41,6 @@ class App extends React.Component {
 	}
 }
 
-class Auth extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			formToShow: 'hello',
-			email: '',
-			password: '',
-			confirm: ''
-		};
-		this.formToShow = this.formToShow.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.signup = this.signup.bind(this);
-		this.login = this.login.bind(this);
-	}
-	componentDidMount(){
-
-	}
-	formToShow(e) {
-		e.preventDefault();
-		this.setState({
-			formToShow: e.target.className
-		});
-	}
-	handleChange(e) {
-		this.setState({
-			[e.target.name]: e.target.value
-		});
-	}
-	signup(e) {
-		e.preventDefault();
-		console.log("signing...");
-		console.log(this.state.email,this.state.password,this.state.confirm);
-		if(this.state.password=this.state.confirm){
-			firebase.auth()
-				.createUserWithEmailAndPassword(this.state.email, this.state.password)
-			.catch((error) => {
-					var errorCode = error.code;
-						var errorMessage = error.message;
-						alert(errorMessage);
-						console.log(error);
-				})
-				// .then((userData) => {
-				// 	console.log("userData")
-				// 	console.log(this.state.email)
-				// 	this.setState({
-				// 		formToShow: "hello"
-				// 	});
-				// });
-		}
-	}
-	login(e) {
-		e.preventDefault();
-		firebase.auth()
-			.signInWithEmailAndPassword(this.state.email, this.state.password)
-			.catch((error) => {
-					var errorCode = error.code;
-						var errorMessage = error.message;
-						alert(errorMessage);
-						console.log(error);
-				})
-
-			// .then((userData) =>{ 
-			// 	alert("Welcome", this.state.email)
-			// })
-	}
-	signout(e){
-		e.preventDefault();
-		firebase.auth()
-			.signOut()
-			.then(() => {
-			alert("Successfully signed out")
-		});
-		location.reload();
-	}
-	render() {
-		let loginForm = '';
-		if(this.state.formToShow === 'signup') {
-			loginForm = (
-				<div className="loginForms">
-					<form onSubmit={this.signup} className="user-form">
-						<div>
-							<label htmlFor="email">Email: </label>
-							<input type="email" name="email" onChange={this.handleChange} />
-						</div>
-						<div>
-							<label htmlFor="password">Password: </label>
-							<input type="password" name="password" onChange={this.handleChange} />
-						</div>
-						<div>
-							<label htmlFor="confirm">Confirm: </label>
-							<input type="password" name="confirm" onChange={this.handleChange} />
-						</div>
-						<button>Sign In</button>
-					</form>
-				</div>
-			);
-		}
-		else if(this.state.formToShow === "login") {
-			loginForm = (
-				<div className="loginForms">
-					<form onSubmit={this.login} className="user-form">
-						<div>
-							<label htmlFor="email">Email: </label>
-							<input type="email" name="email" onChange={this.handleChange}/>
-						</div>
-						<div>
-							<label htmlFor="password">Password: </label>
-							<input type="password" name="password" onChange={this.handleChange}/>
-						</div>
-						<button>Log In</button>
-					</form>
-				</div>
-			);
-		}
-		else if(this.state.formToShow === "hello") {
-			loginForm = (
-				<div className="hello">
-					<h3> Log in or sign up to customize your own fast food diet!</h3>
-				</div>
-			);
-		}
-		//hide login/logout buttons depending on user
-		let login = ""
-		let logout = ""
-		if(firebase.auth().currentUser !== null){
-			logout += "displayBlock"
-		} else {
-			logout += "displayNone"
-		};
-		if(firebase.auth().currentUser !== null){
-			login += "displayNone"
-		} else {
-			login += "displayBlock"
-		};
-		//make buttons dead/become the headings
-		let signupid=""
-		let loginid=""
-		if(this.state.formToShow === 'signup'){
-			signupid += "buttonOn"
-		} else {
-			signupid += ""
-		};
-		if(this.state.formToShow === 'login'){
-			loginid += "buttonOn"
-		} else {
-			loginid += ""
-		};
-		return (
-			<div className="loginOptions">
-				<div className={login}>
-					<button className="signup" id={signupid} onClick={this.formToShow}>Sign Up</button>
-					<button className="login" id={loginid} onClick={this.formToShow}>Log In</button>
-				</div>
-				<div className={logout}>
-					Welcome! <button className="signout" onClick={this.signout}>Log Out</button>
-				</div>
-				<div>
-				{loginForm}
-				</div>
-			</div>
-		)
-	}
-}
-
 class Main extends React.Component {
 	constructor(){
 		super();
@@ -298,7 +51,8 @@ class Main extends React.Component {
 			itemInfo:["Please select","an item",0,0,0,0,0,0],
 			myDietItems:[],
 			totalCount:["","",0,0,0,0,0,0],
-			userMeals:[]
+			userMeals:[],
+			searchError:""
 		}
 		this.addToDiet = this.addToDiet.bind(this);
 		this.removeFromDiet = this.removeFromDiet.bind(this);
@@ -371,8 +125,12 @@ class Main extends React.Component {
 		});
 	}
 	render() {
+		let showButton=""
+		if(firebase.auth().currentUser === null){
+			showButton="buttonDisplayNone"
+		}
 		return(
-		<div>
+			<div>
 				<section>
 					<div className="sideBar">
 						<p><Link to="/resources"><i className="fa fa-book" aria-hidden="true"></i></Link></p>
@@ -386,7 +144,7 @@ class Main extends React.Component {
 						sodium={this.state.totalCount[4]} 
 						sugars={this.state.totalCount[3]}
 					/>
-					<article className="searchFormDiv box">
+					<article className="searchFormDiv box" id="searchSection">
 						<h1> search</h1>
 						<div>
 							<form className="searchForm" onSubmit={(e) => this.searchFoods(e, this.state.search, this.state.brand)}>
@@ -440,7 +198,8 @@ class Main extends React.Component {
 									<label htmlFor="newyorkfries" ><img className="brandLogos" src="/brandLogos/nyf.png" alt="New York Fries"/></label>
 								</div>
 								</div>
-								<div>
+								<div className="search">
+									<p className="errorMessage"> {this.state.searchError}</p>
 									<input type="text" name="search" id="search" placeholder="Search item" onChange={this.handleChange} value={this.state.search}/>
 									<button>Search</button>
 								</div>
@@ -450,7 +209,7 @@ class Main extends React.Component {
 				</section>
 				<main>
 					<div className="sideBar"> <div>&copy; 2017 <a href="http://codedbyjessica.com/" target="_blank">Coded By Jessica</a> | Powered by <a href="https://www.nutritionix.com/business/api" target="_blank">Nutritionix API</a></div> </div>
-					<article className="itemsList box">
+					<article className="itemsList box" id="itemListSection">
 						<div>
 							<h2>{`Showing results for ${this.state.search}`}</h2>
 								{this.state.foods.map((food) => {
@@ -464,7 +223,7 @@ class Main extends React.Component {
 								})}
 						</div>
 					</article>
-					<article className="itemInfoCard box">
+					<article className="itemInfoCard box" id="itemInfoSection">
 						<div className="itemInfo">
 							<h2>{`${this.state.itemInfo[0]}`}</h2>
 							<h3>{`${this.state.itemInfo[1]}`}</h3>
@@ -479,7 +238,7 @@ class Main extends React.Component {
 							<button onClick={this.addToDiet}> Add to my diet</button>
 						</div>
 					</article>
-					<article className="myDiet box">
+					<article className="myDiet box" id="myDietSection">
 						<div>
 							<h2>My Diet</h2>
 							<div className="myDietTotalCount">
@@ -490,7 +249,7 @@ class Main extends React.Component {
 							</div>
 						</div>
 						<button className="myDietClearAll" onClick={(e) => this.clearAll(e)}>Clear All</button>
-						<button className="myDietAddAll" onClick={(e) => this.addAll(e)}>Save to my meals!</button>
+						<button className="myDietAddAll" id={showButton} onClick={(e) => this.addAll(e)}>Save to my meals!</button>
 						{this.state.myDietItems ? 
 						<MyDietSection 
 							myDietItemsState={this.state.myDietItems}
@@ -521,8 +280,14 @@ class Main extends React.Component {
 					foods: data.hits
 				});
 			});
+			this.setState({
+				searchError: ""
+			})
 		} else {
-			alert("bro plz");
+			console.log("Please insert a full search query");
+			this.setState({
+				searchError:"Please insert a full search query"
+			})
 		}
 	}
 	searchItem(e,itemId){
@@ -574,8 +339,6 @@ class MyDietSection extends React.Component{
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////////////
-
 class CalculateNutrients extends React.Component {
 	constructor(){
 		super();
@@ -589,7 +352,8 @@ class CalculateNutrients extends React.Component {
 			proteinNeeded:0,
 			fatNeeded:0,
 			carbsNeeded:0,
-			visible: false
+			visible: false,
+			formError:""
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.ShowMyNutrients = this.ShowMyNutrients.bind(this);
@@ -601,7 +365,7 @@ class CalculateNutrients extends React.Component {
 	}
 	render(props) {
 		return(
-			<div className="myInfo box">
+			<div className="myInfo box" id="myInfoSection">
 				<h1>My info</h1>
 				<form className="myInfoForm" onSubmit={(e) => this.calculateNeeded(e, this.state.sex, this.state.weight, this.state.height, this.state.age)}>
 				<div className="myInfoTop">
@@ -622,6 +386,7 @@ class CalculateNutrients extends React.Component {
 					<input type="radio" name="activity" value="medium" id="medium" onChange={this.handleChange} /> <label htmlFor="medium">Medium</label>
 					<input type="radio" name="activity" value="high" id="high" onChange={this.handleChange} /> <label htmlFor="high">High</label>
 				</div>
+				<p className="errorMessage">{this.state.formError}</p>
 				<div><button onClick={this.ShowMyNutrients}>Submit</button></div>
 				</form>
 
@@ -646,18 +411,29 @@ class CalculateNutrients extends React.Component {
 		)
 	}
 	ShowMyNutrients(){
-		this.setState({
-			visible: true
-		});
+		if(this.state.sex && this.state.weight !== ""){
+			this.setState({
+				visible: true
+			});
+		}
 	}
 	calculateNeeded(e){
 		e.preventDefault();
 		if(this.state.sex === "female"){
+			this.setState({
+				formError:""
+			})
 			var bmr = 655.1 + (9.6*this.state.weight) + 1.9*this.state.height - 4.7*this.state.age
 		} else if(this.state.sex ==="male"){
+			this.setState({
+				formError:""
+			})
 			var bmr = 66.5 + (13.8*this.state.weight) + (5.0*this.state.height) - (6.8*this.state.age)
 		}else{
-			alert("broplz");
+			this.setState({
+				formError:"Please fill in the form completely"
+			})
+			console.log("Please fill in the form completely");
 		}
 		if(this.state.activity === "medium"){
 			var caloriesNeeded = Math.round(1.2*bmr)
