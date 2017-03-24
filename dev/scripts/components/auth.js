@@ -11,6 +11,7 @@ export default class Auth extends React.Component {
 			user: ""
 		};
 		this.formToShow = this.formToShow.bind(this);
+		this.closeForm = this.closeForm.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.signup = this.signup.bind(this);
 		this.login = this.login.bind(this);
@@ -27,6 +28,15 @@ export default class Auth extends React.Component {
 		this.setState({
 			formToShow: e.target.className
 		});
+		document.getElementById("maskDiv").classList.add("mask");
+	}
+	closeForm(e){
+		e.preventDefault();
+		console.log("closing!")
+		this.setState({
+			formToShow: ""
+		});
+		document.getElementById("maskDiv").classList.remove("mask");
 	}
 	handleChange(e) {
 		this.setState({
@@ -79,6 +89,9 @@ export default class Auth extends React.Component {
 		if(this.state.formToShow === 'signup') {
 			loginForm = (
 				<div className="loginForms">
+					<div>
+						<button className="loginClose" onClick={this.closeForm}>x</button>
+					</div>
 					<form onSubmit={this.signup} className="user-form">
 						<div>
 							<label htmlFor="email">Email: </label>
@@ -100,6 +113,9 @@ export default class Auth extends React.Component {
 		else if(this.state.formToShow === "login") {
 			loginForm = (
 				<div className="loginForms">
+					<div>
+						<button className="loginClose" onClick={this.closeForm}>x</button>
+					</div>
 					<form onSubmit={this.login} className="user-form">
 						<div>
 							<label htmlFor="email">Email: </label>

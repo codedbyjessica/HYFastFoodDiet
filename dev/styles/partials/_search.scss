@@ -25,6 +25,11 @@
 		-webkit-filter: brightness(-100);
 		filter: brightness(-100);
 		}
+		img:hover{
+			cursor:pointer;
+			-webkit-filter: none;
+			filter: none;
+		}
 	}
 
 	input[type="radio"]:checked ~ label {

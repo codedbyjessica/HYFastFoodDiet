@@ -1,15 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router, Route, Link } from 'react-router';
-import { createHistory, useBasename } from "history";
+import { Router, Route, browserHistory, Link } from 'react-router';
 import { ajax } from "jquery";
 import DietItem from "./components/dietItem";
 import User from "./components/user";
 import Auth from "./components/auth";
-
-const browserHistory = useBasename(createHistory)({
-	basename: "/fastfooddiet"
-});
 
 const config = {
 	apiKey: "AIzaSyCut2SB5QB85C97vjnzaAG1pPJeDssUzfA",
@@ -25,7 +20,6 @@ class App extends React.Component {
 	render(){
 		return(
 			<div className="container">
-				<div id="maskDiv"></div>
 				<header>
 					<div className="logo" id="top">
 						<Link to="/">
@@ -34,8 +28,8 @@ class App extends React.Component {
 					</div>
 					<div className="mainNav">
 						<nav>
-							<Link to="/"><i className="fa fa-home" aria-hidden="true"></i>  </Link>
-							<Link to="/user"><i className="fa fa-list" aria-hidden="true"></i> </Link>
+							<Link to="/"><i className="fa fa-calculator" aria-hidden="true"></i></Link>
+							<Link to="/user"><i className="fa fa-list" aria-hidden="true"></i></Link>
 						</nav>
 						<Auth />
 					</div>
@@ -151,57 +145,57 @@ class Main extends React.Component {
 						sugars={this.state.totalCount[3]}
 					/>
 					<article className="searchFormDiv box" id="searchSection">
-						<h1>Find items</h1>
+						<h1> search</h1>
 						<div>
 							<form className="searchForm" onSubmit={(e) => this.searchFoods(e, this.state.search, this.state.brand)}>
 								<div className="brandInputs">
 								<div className="foodsBrand">
 									<input type="radio" name="brand" id="mcdonalds" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000053"/>
-									<label htmlFor="mcdonalds"><img className="brandLogos" src="/fastfooddiet/brandLogos/mcdonalds.png" alt="McDonalds"/></label>
+									<label htmlFor="mcdonalds"><img className="brandLogos" src="/brandLogos/mcdonalds.png" alt="McDonalds"/></label>
 								</div>
 								<div className="foodsBrand">
 									<input type="radio" name="brand" id="kfc" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c00001e"/>
-									<label htmlFor="kfc"><img className="brandLogos" src="/fastfooddiet/brandLogos/kfc.png" alt="KFC"/></label>
+									<label htmlFor="kfc"><img className="brandLogos" src="/brandLogos/kfc.png" alt="KFC"/></label>
 								</div>
 								<div className="foodsBrand">
 									<input type="radio" name="brand" id="burgerking" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c00000a"/>
-									<label htmlFor="burgerking"><img className="brandLogos" src="/fastfooddiet/brandLogos/bk.png" alt="Burger King"/></label>
+									<label htmlFor="burgerking"><img className="brandLogos" src="/brandLogos/bk.png" alt="Burger King"/></label>
 								</div>
 								<div className="foodsBrand">
 									<input type="radio" name="brand" id="wendys" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c00000f"/>
-									<label htmlFor="wendys" ><img className="brandLogos" src="/fastfooddiet/brandLogos/wendys.png" alt="Wendy's"/></label>
+									<label htmlFor="wendys" ><img className="brandLogos" src="/brandLogos/wendys.png" alt="Wendy's"/></label>
 								</div>
 								<div className="foodsBrand">
 									<input type="radio" name="brand" id="aw" onChange={this.handleRadioChange} value="51db37b8176fe9790a898af4"/>
-									<label htmlFor="aw" ><img className="brandLogos" src="/fastfooddiet/brandLogos/aw.png" alt="A&W"/></label>
+									<label htmlFor="aw" ><img className="brandLogos" src="/brandLogos/aw.png" alt="A&W"/></label>
 								</div>
 								<div className="foodsBrand">
 									<input type="radio" name="brand" id="arbys" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000023"/>
-									<label htmlFor="arbys"><img className="brandLogos" src="/fastfooddiet/brandLogos/arbys.png" alt="Arby's"/></label>
+									<label htmlFor="arbys"><img className="brandLogos" src="/brandLogos/arbys.png" alt="Arby's"/></label>
 								</div>
 								<div className="foodsBrand">
 									<input type="radio" name="brand" id="tims" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000094"/>
-									<label htmlFor="tims"><img className="brandLogos" src="/fastfooddiet/brandLogos/tims.png" alt="Tim Hortons"/></label>
+									<label htmlFor="tims"><img className="brandLogos" src="/brandLogos/tims.png" alt="Tim Hortons"/></label>
 								</div>
 								<div className="foodsBrand">
 									<input type="radio" name="brand" id="dairyqueen" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000027"/>
-									<label htmlFor="dairyqueen" ><img className="brandLogos" src="/fastfooddiet/brandLogos/dq.png" alt="Dairy Queen"/></label>
+									<label htmlFor="dairyqueen" ><img className="brandLogos" src="/brandLogos/dq.png" alt="Dairy Queen"/></label>
 								</div>
 								<div className="foodsBrand">
 									<input type="radio" name="brand" id="fiveguys" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c00003f"/>
-									<label htmlFor="fiveguys" ><img className="brandLogos" src="/fastfooddiet/brandLogos/fiveguys.png" alt="Five Guys"/></label>
+									<label htmlFor="fiveguys" ><img className="brandLogos" src="/brandLogos/fiveguys.png" alt="Five Guys"/></label>
 								</div>
 								<div className="foodsBrand">
 									<input type="radio" name="brand" id="tacobell" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000020"/>
-									<label htmlFor="tacobell" ><img className="brandLogos" src="/fastfooddiet/brandLogos/taco.png" alt="Taco Bell"/></label>
+									<label htmlFor="tacobell" ><img className="brandLogos" src="/brandLogos/taco.png" alt="Taco Bell"/></label>
 								</div>
 								<div className="foodsBrand">
 									<input type="radio" name="brand" id="popeyes" onChange={this.handleRadioChange} value="513fbc1283aa2dc80c000029"/>
-									<label htmlFor="popeyes" ><img className="brandLogos" src="/fastfooddiet/brandLogos/popeyes.png" alt="Popeyes"/></label>
+									<label htmlFor="popeyes" ><img className="brandLogos" src="/brandLogos/popeyes.png" alt="Popeyes"/></label>
 								</div>
 								<div className="foodsBrand">
 									<input type="radio" name="brand" id="newyorkfries" onChange={this.handleRadioChange} value="521b95444a56d006cae29a0e"/>
-									<label htmlFor="newyorkfries" ><img className="brandLogos" src="/fastfooddiet/brandLogos/nyf.png" alt="New York Fries"/></label>
+									<label htmlFor="newyorkfries" ><img className="brandLogos" src="/brandLogos/nyf.png" alt="New York Fries"/></label>
 								</div>
 								</div>
 								<div className="search">
