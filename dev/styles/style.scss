@@ -1,5 +1,6 @@
 @import "partials/norm";
 @import "partials/variables";
+@import "partials/globals";
 @import "partials/myinfo.scss";
 @import "partials/results.scss";
 @import "partials/search.scss";
@@ -8,99 +9,106 @@
 @import "partials/mydiet.scss";
 @import "partials/userpage.scss";
 @import "partials/footer.scss";
-@import "partials/mq.scss";
 
-//////////////////////////////////////////////////////////// G L O B A L GLOBAL GLOBAL
-a:hover, button:hover, p:hover{
-	transition: all 0.5s ease;
-}
 
-h1, h2, h3, h4, h5 {
-	margin: 0;
-}
+//////////////////////////////////////////////////////////// M E D I A Q U E R I E S mediaqueriesss
 
-h1{
-	padding: 10px 15px;
-	text-transform: uppercase;
-	font-size: 24px;
-}
-
-h2{
-	margin-bottom: 10px;
-}
-
-p{
-	margin: 8px 0;
-}
-
-a{
-	color: $lightColor;
-	text-decoration: none;
-	&:hover{
-		color: #primaryColorLight;
+@media (max-width: 1050px) {
+	section{
+		flex-direction: column
+	}
+	.myInfo{
+		width: 100%;
+		order: 0;
+		padding-bottom: 20px;
+	}
+	.searchFormDiv, .resourcesContent, .mealsContent{
+		width: 100%;
+	}
+	.searchFormDiv{
+		h1{
+			background-color: $primaryColorLight;
+			text-align: center;
+		}
+	}
+	.sideBar{
+		display:none;
+	}
+	.itemList, .itemInfoCard, .myDiet{
+		width: 33.3%;
+	}
+	main{
+		.itemsList{
+			width: 33.3%;
+		}
+		.itemInfoCard{
+			width: 33.3%;
+		}
+		.myDiet{
+			width: 33.3%;
+		}
+	}
+	footer{
+		display:block;
 	}
 }
 
-body{
-	background-color: $mediumColor;
-	font-family: 'Roboto', sans-serif;
-	font-size: 12px;
-	color:$darkColor;
-	overflow-y: scroll;
+@media (max-width: 990px) {
+	.container{
+		width: 90%;
+	}
+	header{
+		flex-direction: column;
+	}
+	div.logo{
+		text-align: center;
+		width: 100%;
+		a{
+			width: 100%;
+		}
+		img{
+			width: 30px;
+			margin: 10px;
+		}
+	}
+	.mainNav{
+		width: 100%;
+	}
+	.eachMeal{
+		width: 50%;
+	}
 }
 
-.container{
-	margin: 0 auto;
-	background-color: $mediumColor;
-	-webkit-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5);
-	-moz-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5);
-	box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5);
+@media (max-width: 660px) {
+	.container{
+		width: 95%;
+	}
+	main{
+		flex-direction: column;
+		.itemsList{
+			width: 100%;
+		}
+		.itemInfoCard{
+			width: 100%;
+		}
+		.myDiet{
+			width: 100%;
+		}
+	}
+
+	.box div.itemAdd{
+		padding-top: 0;
+	}
 }
 
-section{
-	display:flex;
-}
-
-.box > div{
-	padding: 20px;
-}
-
-button {
-	background-color: $highlightColor;
-	color: $lightColor;
-	padding: 5px 10px;
-	border: 1px solid $darkColor;
-	text-transform: capitalize;
-}
-
-button:hover {
-	background-color: $lightColor;
-	color: $darkColor;
-}
-
-
-.errorMessage{
-	color: $highlightColor;
-	margin-bottom:0;
-}
-
-//////////////////////////////////////////////////////////// R E S O U R C E S  RESOURCES
-
-.resources{
-	margin: 40px;
-	min-height: 50vh;
-}
-
-.displayNone{
-	display:none;
-}
-
-.mask {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	z-index: 2;
-	background: rgba(0, 0, 0, 0.6);
+@media (max-width: 480px) {
+	.container{
+		width: 100%;
+	}
+	.foodsBrand {
+		width: 25%;
+	}
+	.eachMeal{
+		width: 100%;
+	}
 }

@@ -20,12 +20,29 @@ const config = {
 };
 firebase.initializeApp(config);
 
-
 class App extends React.Component {
+	constructor(){
+		super();
+		this.state = {
+			showButton: ""
+		}
+	}
+	componentDidMount(){
+		firebase.auth().onAuthStateChanged((user) =>{
+			if(user){
+				this.setState({
+					showButton:"",
+				})
+			}else{
+				this.setState({
+					showButton:"buttonDisplayNone"
+				})
+			}
+		})
+	}
 	render(){
 		return(
 			<div className="container">
-				<div id="maskDiv"></div>
 				<header>
 					<div className="logo" id="top">
 						<Link to="/">
@@ -35,7 +52,7 @@ class App extends React.Component {
 					<div className="mainNav">
 						<nav>
 							<Link to="/"><i className="fa fa-home" aria-hidden="true"></i>  </Link>
-							<Link to="/user"><i className="fa fa-list" aria-hidden="true"></i> </Link>
+							<Link to="/user"><i className={`fa fa-list ${this.state.showButton}`} aria-hidden="true"></i> </Link>
 						</nav>
 						<Auth />
 					</div>
@@ -52,18 +69,33 @@ class Main extends React.Component {
 		super();
 		this.state = {
 			foods: [],
+			dataHere: false,
 			brand:"",
 			search:"",
 			itemInfo:["Please select","an item",0,0,0,0,0,0],
 			myDietItems:[],
 			totalCount:["","",0,0,0,0,0,0],
 			userMeals:[],
-			searchError:""
+			searchError:"",
+			showButton: ""
 		}
 		this.addToDiet = this.addToDiet.bind(this);
 		this.removeFromDiet = this.removeFromDiet.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleRadioChange = this.handleRadioChange.bind(this);
+	}
+	componentDidMount(){
+		firebase.auth().onAuthStateChanged((user) =>{
+			if(user){
+				this.setState({
+					showButton:"",
+				})
+			}else{
+				this.setState({
+					showButton:"buttonDisplayNone"
+				})
+			}
+		})
 	}
 	addToDiet(e){
 		e.preventDefault();
@@ -131,9 +163,11 @@ class Main extends React.Component {
 		});
 	}
 	render() {
-		let showButton=""
-		if(firebase.auth().currentUser === null){
-			showButton="buttonDisplayNone"
+		let showDietButton=""
+			
+		if(this.state.dataHere === false){
+			showDietButton="buttonDisplayNone"
+			console.log("iteminfo", this.state.foods)
 		}
 		return(
 			<div>
@@ -241,7 +275,7 @@ class Main extends React.Component {
 							<h4>{`Sugars: ${this.state.itemInfo[3]}g`}</h4>
 						</div>
 						<div className="itemAdd">
-							<button onClick={this.addToDiet}> Add to my diet</button>
+							<button className={`${showDietButton}`} onClick={this.addToDiet}> Add to my diet</button>
 						</div>
 					</article>
 					<article className="myDiet box" id="myDietSection">
@@ -255,7 +289,7 @@ class Main extends React.Component {
 							</div>
 						</div>
 						<button className="myDietClearAll" onClick={(e) => this.clearAll(e)}>Clear All</button>
-						<button className="myDietAddAll" id={showButton} onClick={(e) => this.addAll(e)}>Save to my meals!</button>
+						<button className={`myDietAddAll ${this.state.showButton}`} onClick={(e) => this.addAll(e)}>Save to my meals!</button>
 						{this.state.myDietItems ? 
 						<MyDietSection 
 							myDietItemsState={this.state.myDietItems}
@@ -319,7 +353,8 @@ class Main extends React.Component {
 					data.nf_protein,
 					data.nf_total_carbohydrate,
 					data.nf_total_fat
-				]
+				],
+				dataHere: true
 			});
 		});
 	}
@@ -380,11 +415,11 @@ class CalculateNutrients extends React.Component {
 				</div>
 				<div>
 					Age:
-					<input type="text" name="age" className="numberInput" placeholder="Age" onChange={this.handleChange} />
+					<input type="text" name="age" className="numberInput" onChange={this.handleChange} />
 					Weight(kg)
-					<input type="text" name="weight" className="numberInput" placeholder="Weight(kg)" onChange={this.handleChange} />
+					<input type="text" name="weight" className="numberInput" onChange={this.handleChange} />
 					Height(cm)
-					<input type="text" name="height" className="numberInput" placeholder="Height(cm)" onChange={this.handleChange} />
+					<input type="text" name="height" className="numberInput" onChange={this.handleChange} />
 				</div>
 				<div>
 					Exercise level:
@@ -395,8 +430,6 @@ class CalculateNutrients extends React.Component {
 				<p className="errorMessage">{this.state.formError}</p>
 				<div><button onClick={this.ShowMyNutrients}>Submit</button></div>
 				</form>
-
-
 				{
 					this.state.visible
 					? <NutrientsToAdd 

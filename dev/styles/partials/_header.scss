@@ -51,7 +51,7 @@ nav .fa{
 	}
 }
 
-#buttonDisplayNone{
+.buttonDisplayNone{
 	display:none;
 }
 
@@ -62,14 +62,14 @@ nav .fa{
 }
 
 .loginForms{
-	text-align:right;
+	text-align:left;
 	padding: 10px 20px;
-	position: fixed;
+	position: absolute;
 	z-index: 3;
 	left:50%;
 	top:50%;
-	transform: translateX(-50%);
-	transform: translateY(-50%);
+	border: 1px solid $darkColor;
+	transform: translate(-50%, -50%);
 	background-color: $primaryColorLight;
 	-webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 	-moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
@@ -80,6 +80,14 @@ nav .fa{
 	button{
 		margin: 10px 0;
 	}
+	label{
+		display: block;
+	}
+}
+
+.loginCloseDiv{
+	text-align: right;
+	margin:0;
 }
 
 .loginClose{

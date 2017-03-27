@@ -56,8 +56,7 @@ export default class Auth extends React.Component {
 						alert(errorMessage);
 						console.log(error);
 				})
-	setTimeout(location.reload.bind(location), 1000);
-
+		setTimeout(location.reload.bind(location), 1000);
 		}
 	}
 	login(e) {
@@ -70,26 +69,22 @@ export default class Auth extends React.Component {
 						alert(errorMessage);
 						console.log(error);
 				})
-	setTimeout(location.reload.bind(location), 1200);
-
+		setTimeout(location.reload.bind(location), 1200);
 	}
 	signout(e){
 		e.preventDefault();
 		firebase.auth()
 			.signOut()
 			.then(() => {
-
 		});
-
-	window.location.assign("/");
-
+	window.location.assign("/fastfooddiet/");
 	}
 	render() {
 		let loginForm = '';
 		if(this.state.formToShow === 'signup') {
 			loginForm = (
 				<div className="loginForms">
-					<div>
+					<div className="loginCloseDiv">
 						<button className="loginClose" onClick={this.closeForm}>x</button>
 					</div>
 					<form onSubmit={this.signup} className="user-form">
@@ -113,7 +108,7 @@ export default class Auth extends React.Component {
 		else if(this.state.formToShow === "login") {
 			loginForm = (
 				<div className="loginForms">
-					<div>
+					<div className="loginCloseDiv">
 						<button className="loginClose" onClick={this.closeForm}>x</button>
 					</div>
 					<form onSubmit={this.login} className="user-form">
@@ -147,7 +142,6 @@ export default class Auth extends React.Component {
 		} else {
 			logout = "displayNone"
 		};
-
 
 		//make buttons dead/become the headings
 		let signupid=""
