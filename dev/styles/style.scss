@@ -13,6 +13,12 @@
 
 //////////////////////////////////////////////////////////// M E D I A Q U E R I E S mediaqueriesss
 
+@media (max-width: 1280px) {
+	.container{
+		width: 80%;
+	}
+}
+
 @media (max-width: 1050px) {
 	section{
 		flex-direction: column
@@ -48,6 +54,9 @@
 			width: 33.3%;
 		}
 	}
+	.nutrientsToAdd{
+		width: 50%;
+	}
 	footer{
 		display:block;
 	}
@@ -61,10 +70,10 @@
 		flex-direction: column;
 	}
 	div.logo{
-		text-align: center;
+		// text-align: center;
 		width: 100%;
 		a{
-			width: 100%;
+			// width: 100%;
 		}
 		img{
 			width: 30px;
@@ -74,6 +83,7 @@
 	.mainNav{
 		width: 100%;
 	}
+
 	.eachMeal{
 		width: 50%;
 	}
@@ -95,7 +105,9 @@
 			width: 100%;
 		}
 	}
-
+	.nutrientsToAdd{
+		width: 60%;
+	}
 	.box div.itemAdd{
 		padding-top: 0;
 	}
@@ -107,6 +119,9 @@
 	}
 	.foodsBrand {
 		width: 25%;
+	}
+	.nutrientsToAdd{
+		width: 80%;
 	}
 	.eachMeal{
 		width: 100%;

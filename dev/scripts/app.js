@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Router, Route, Link } from 'react-router';
 import { createHistory, useBasename } from "history";
 import { ajax } from "jquery";
+import $ from "jquery";
 import DietItem from "./components/dietItem";
 import User from "./components/user";
 import Auth from "./components/auth";
@@ -46,13 +47,14 @@ class App extends React.Component {
 				<header>
 					<div className="logo" id="top">
 						<Link to="/">
-							<img src="logo.png" alt="logo" />
+							<img src="logo.png" alt="logo" className="toolTip" name="Fast Food Diet"/>
 						</Link>
+						<h3>Plan your fast food meals with health in mind. </h3>
 					</div>
 					<div className="mainNav">
 						<nav>
-							<Link to="/"><i className="fa fa-home" aria-hidden="true"></i>  </Link>
-							<Link to="/user"><i className={`fa fa-list ${this.state.showButton}`} aria-hidden="true"></i> </Link>
+							<Link to="/" className="toolTip" name="Home"><i className="fa fa-home" aria-hidden="true"></i>  </Link>
+							<Link to="/user" className="toolTip" name="My Saved Meals"><i className={`fa fa-list ${this.state.showButton}`} aria-hidden="true"></i> </Link>
 						</nav>
 						<Auth />
 					</div>
@@ -112,6 +114,11 @@ class Main extends React.Component {
 			myDietItems: dietState,
 			totalCount: totalCount
 		});
+		if ($(window).width() <= 660){
+			$('html, body').animate({
+			scrollTop: $("#myDietSection").offset().top
+			}, 500);
+		}
 	}
 	removeFromDiet(dietIndex){
 		const dietState = Array.from(this.state.myDietItems);
@@ -167,14 +174,14 @@ class Main extends React.Component {
 			
 		if(this.state.dataHere === false){
 			showDietButton="buttonDisplayNone"
-			console.log("iteminfo", this.state.foods)
+			// console.log("iteminfo", this.state.foods)
 		}
 		return(
 			<div>
 				<section>
 					<div className="sideBar">
-						<p><Link to="/resources"><i className="fa fa-book" aria-hidden="true"></i></Link></p>
-						<p><a href="https://twitter.com/intent/tweet?text=Plan%20your%20fast%20food%20meals%20with%20health%20in%20mind!%20http://codedbyjessica.com/fastfooddiet%20developed%20by%20@codedbyjessica" target="_blank"><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
+						<p><Link to="/resources" className="toolTip" name="Resources"><i className="fa fa-book" aria-hidden="true"></i></Link></p>
+						<p><a href="https://twitter.com/intent/tweet?text=Plan%20your%20fast%20food%20meals%20with%20health%20in%20mind!%20http://codedbyjessica.com/fastfooddiet%20developed%20by%20@codedbyjessica" target="_blank" className="toolTip" name="Share On Twitter!"><i className="fa fa-twitter" aria-hidden="true"></i></a></p>
 					</div>
 					<CalculateNutrients 
 						calories={this.state.totalCount[2]} 
@@ -185,7 +192,8 @@ class Main extends React.Component {
 						sugars={this.state.totalCount[3]}
 					/>
 					<article className="searchFormDiv box" id="searchSection">
-						<h1>Find items</h1>
+						<h1>2. Find items</h1>
+						<p className="centerDescription">Please select a restaurant and search for an item.</p>
 						<div>
 							<form className="searchForm" onSubmit={(e) => this.searchFoods(e, this.state.search, this.state.brand)}>
 								<div className="brandInputs">
@@ -323,8 +331,13 @@ class Main extends React.Component {
 			this.setState({
 				searchError: ""
 			})
+			if ($(window).width() <= 660){	
+				$('html, body').animate({
+				scrollTop: $("#itemListSection").offset().top
+				}, 500);
+			}
 		} else {
-			console.log("Please insert a full search query");
+			// console.log("Please insert a full search query");
 			this.setState({
 				searchError:"Please insert a full search query"
 			})
@@ -357,6 +370,11 @@ class Main extends React.Component {
 				dataHere: true
 			});
 		});
+		if ($(window).width() <= 660){
+			$('html, body').animate({
+			scrollTop: $("#itemInfoSection").offset().top
+			}, 500);
+		}
 	}
 }
 
@@ -407,7 +425,8 @@ class CalculateNutrients extends React.Component {
 	render(props) {
 		return(
 			<div className="myInfo box" id="myInfoSection">
-				<h1>My info</h1>
+				<h1>1. My info</h1>
+				<p className="centerDescription">Please enter your info to calculate your recommended daily nutritional intake.</p>
 				<form className="myInfoForm" onSubmit={(e) => this.calculateNeeded(e, this.state.sex, this.state.weight, this.state.height, this.state.age)}>
 				<div className="myInfoTop">
 					<input type="radio" name="sex" value="male" id="male" onChange={this.handleChange} /><label htmlFor="male">Male</label>
@@ -472,7 +491,7 @@ class CalculateNutrients extends React.Component {
 			this.setState({
 				formError:"Please fill in the form completely"
 			})
-			console.log("Please fill in the form completely");
+			// console.log("Please fill in the form completely");
 		}
 		if(this.state.activity === "medium"){
 			var caloriesNeeded = Math.round(1.2*bmr)

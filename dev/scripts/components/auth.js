@@ -23,6 +23,16 @@ export default class Auth extends React.Component {
 			}
 		})
 	}
+	componentDidMount(){
+		 document.addEventListener('keydown', (e) => {
+			if(e.keyCode == 27){
+				this.setState({
+				formToShow: ""
+				});
+				document.getElementById("maskDiv").classList.remove("mask");;
+			}
+		});
+	}
 	formToShow(e) {
 		e.preventDefault();
 		this.setState({
@@ -32,7 +42,7 @@ export default class Auth extends React.Component {
 	}
 	closeForm(e){
 		e.preventDefault();
-		console.log("closing!")
+		// console.log("closing!")
 		this.setState({
 			formToShow: ""
 		});
@@ -45,8 +55,8 @@ export default class Auth extends React.Component {
 	}
 	signup(e) {
 		e.preventDefault();
-		console.log("signing...");
-		console.log(this.state.email,this.state.password,this.state.confirm);
+		// console.log("signing...");
+		// console.log(this.state.email,this.state.password,this.state.confirm);
 		if(this.state.password=this.state.confirm){
 			firebase.auth()
 				.createUserWithEmailAndPassword(this.state.email, this.state.password)
@@ -67,7 +77,7 @@ export default class Auth extends React.Component {
 					var errorCode = error.code;
 						var errorMessage = error.message;
 						alert(errorMessage);
-						console.log(error);
+						// console.log(error);
 				})
 		setTimeout(location.reload.bind(location), 1200);
 	}
@@ -129,7 +139,7 @@ export default class Auth extends React.Component {
 		//hide login/logout buttons depending on user
 		let login = ""
 		let logout = ""
-		console.log(this.state.user)
+		// console.log(this.state.user)
 
 		if(this.state.user){
 			login = "displayNone"
@@ -163,7 +173,7 @@ export default class Auth extends React.Component {
 					<button className="login" id={loginid} onClick={this.formToShow}>Log In</button>
 				</div>
 				<div className={logout}>
-					Welcome! <button className="signout" onClick={this.signout}>Log Out</button>
+					Welcome {this.state.email}! <button className="signout" onClick={this.signout}>Log Out</button>
 				</div>
 				<div>
 				{loginForm}

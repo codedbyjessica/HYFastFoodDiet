@@ -3,11 +3,11 @@ main{
 	display:flex;
 	.itemsList{
 		width: 31.3%;
-		background-color: $primaryColorDark;
+		background-color: $primaryColorLight;
 	}
 	.itemInfoCard{
 		width: 31.3%;
-		background-color: $primaryColorLight;
+		background-color: $primaryColorDark;
 		h4{
 			margin: 10px 0;
 		}

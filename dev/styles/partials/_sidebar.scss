@@ -16,14 +16,20 @@
 		}
 	}
 	div{
-		width: 600px;
+		width: 400px;
 		color: $primaryColorLight;
 		transform: rotate(-90deg);
 		-ms-transform: rotate(-90deg); 
 		-webkit-transform: rotate(-90deg);
 		letter-spacing: 1px;
 		margin-top: -10px;
-		margin-left: -280px;
+		margin-left: -170px;
+		@media (max-width: 1330px){
+			margin-left: -184px;
+		}
+		@media (max-width: 1280px){
+			margin-left: -180px;
+		}
 		a{
 			color: $primaryColorDark;
 			text-decoration: none;
